@@ -12,13 +12,14 @@ import {
   faCircleQuestion
 } from '@fortawesome/free-regular-svg-icons';
 import { faGooglePay, faAppStore } from '@fortawesome/free-brands-svg-icons';
+import { SearchInputComponent } from "./search-input/search-input.component";
 
 @Component({
   selector: 'app-header',
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, SearchInputComponent, SearchInputComponent],
 })
 export class HeaderComponent {
 
