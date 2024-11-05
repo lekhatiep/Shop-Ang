@@ -1,0 +1,19 @@
+<div class="home-product">
+    <div class="flex grid__row">
+        <!-- Product item -->
+        <!-- <div class="grid__column-2-4"> -->
+        @if(isFetching() && !error()){
+            <p> Loading....</p>
+        }
+
+        @if(error()){
+            <p class="text-red-400"></p>
+        }@else{
+            @for (item of products(); track $index) {
+                <p>{{item.productImages?.at(0)}}</p>
+                <app-product-item [product]="item"></app-product-item>
+            }
+        }
+
+    </div>
+</div>

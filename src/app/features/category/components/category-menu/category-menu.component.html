@@ -1,0 +1,21 @@
+<div class="col-2 hide-mobile">
+    <nav class="category bg-white">
+        <h3 class="category__heading">Danh mục</h3>
+        @if(isFetching() && !error()){
+            <p>Loading...</p>
+        }
+        
+        @if(error()){
+            <p class="text-red-400"> {{ error()}} </p>
+        }
+        @else{
+            <ul class="category-list">
+                @for (item of categories(); track $index) {
+                    <li class="category-item">
+                        <a href="" class="category-item__link">{{item.name}}</a>
+                    </li>
+                }
+            </ul>
+        }    
+    </nav>
+</div>

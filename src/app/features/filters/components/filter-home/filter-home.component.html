@@ -1,0 +1,56 @@
+<div class="row home-filter">
+  <span class="col home-filter__label margin-bottom-12">Sắp xếp theo</span>
+  <button
+    class="col home-filter__btn btn home-filter__btn-popular margin-bottom-12 margin-left-12"
+  >
+    Phổ biến
+  </button>
+  <button
+    class="col home-filter__btn btn btn--primary home-filter__btn-newest margin-bottom-12 margin-left-12"
+  >
+    Mới nhất
+  </button>
+  <button
+    class="col home-filter__btn btn home-filter__btn-best-sale btn--disabled margin-bottom-12 margin-left-12"
+  >
+    Bán chạy
+  </button>
+
+  <div
+    class="col-xl-2 col-sm-7 select-input margin-bottom-12-mb margin-left-12"
+  >
+    <span class="select-input__label">Giá</span>
+    <i class="select-input__icon fa-solid fa-angle-down"></i>
+    <ul class="select-input-list">
+      <li class="select-input__item">
+        <a href="" class="select-input__link select-input__link-price-asc"
+          >Giá: Thấp đến cao</a
+        >
+      </li>
+      <li class="select-input__item">
+        <a href="" class="select-input__link select-input__link-price-desc"
+          >Giá: Cao đến thấp</a
+        >
+      </li>
+    </ul>
+  </div>
+  <div class="col home-filter__page d-flex justify-content-end">
+    <span class="home-filter__page-num">
+      <span class="home-filter__page-cur">1</span>/<span
+        class="home-filter__page-total-page"
+        >1</span
+      >
+    </span>
+    <div class="home-filter__page-control">
+      <a
+        href=""
+        class="home-filter__page-btn home-filter__page-btn--disabled home-filter__page-control-prev"
+      >
+        <fa-icon class="home-filter-page-icon " [icon]="['fas', 'angle-left']"></fa-icon>
+      </a>
+      <a href="" class="home-filter__page-btn home-filter__page-control-next">
+        <fa-icon class="home-filter-page-icon " [icon]="['fas', 'angle-right']"></fa-icon>
+      </a>
+    </div>
+  </div>
+</div>

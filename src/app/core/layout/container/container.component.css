@@ -1,4 +1,8 @@
 /* Container */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .app__container {
     background-color: #f5f5f5;
 }

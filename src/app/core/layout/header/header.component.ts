@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import {
   FaIconLibrary,
   FontAwesomeModule,
@@ -20,6 +20,7 @@ import { SearchInputComponent } from "./search-input/search-input.component";
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
   imports: [FontAwesomeModule, SearchInputComponent, SearchInputComponent],
+  encapsulation: ViewEncapsulation.None
 })
 export class HeaderComponent {
 
