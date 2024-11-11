@@ -1,12 +1,12 @@
 <div class="app__container mt-2 ml-2 mr-2">
-    <div class="container pt-9 mr-auto ml-auto">
+    <div class="container mt-3 mr-auto ml-auto">
     <!-- <div class="grid"> -->
     <!-- <div class="row"> -->
         <div class="app-content flex flex-wrap ">
             <!-- Right side -->
             <!-- Category -->
-             <div class="flex-auto w-2/12">
-                <app-category-menu></app-category-menu>
+             <div class="flex-auto w-2/12 pl-2 pr-2">
+                <app-category-menu (selectedCategory)="onMenuCategorySelect($event)"/>
              </div>
 
             <!-- End of category -->
@@ -16,7 +16,6 @@
             <div class="flex-auto md:w-10/12 sm:w-12 col-md-10 col-sm-12">
                 <!-- Filter -->
                 <app-filter-home></app-filter-home>
-
 
                 <!-- End of filter-->
 
@@ -42,11 +41,10 @@
                 </div>
                
                 <!-- Product list -->
-                <app-product-home></app-product-home>
+                <app-product-home [categoryId]="selectedCategoryId"/>
                 <!-- End of product list -->
-
                 <!-- Pagination -->
-                <ul class="pagination home-product__pagination">
+                <!-- <ul class="pagination home-product__pagination">
                     <li class="pagination-item">
                         <a href="" class="pagination-item__link">
                             <i class="pagination-item-icon fa-solid fa-angle-left"></i>
@@ -78,7 +76,9 @@
                             <i class="pagination-item-icon fa-solid fa-angle-right"></i>
                         </a>
                     </li>
-                </ul> 
+                </ul>  -->
+                
+                
                 <!-- End of pagination -->
             </div>
             <!-- End of pagination -->

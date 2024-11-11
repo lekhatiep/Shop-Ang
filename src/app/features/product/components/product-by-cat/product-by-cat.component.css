@@ -1,0 +1,213 @@
+.home-product {
+    margin-bottom: 10px;
+}
+
+.home-product-item {
+    display: block;
+    margin-top: 10px;
+    background-color:var(--white-color);
+    position: relative;
+    border-radius: 2px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0,0.05);
+    transition: transform linear 0.1s;
+    will-change: transform;
+    text-decoration: none;
+}
+
+.home-product-item:hover {
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0,0.05);
+    -webkit-transform: translateY(-1px);
+    transform: translateY(-1px);
+    z-index: 1;
+}
+
+.home-product-item__img{
+    padding-top: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+
+}
+
+.home-product-item__name{
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--text-color);
+    line-height: 1.8rem;
+    height: 3.6rem;
+    margin: 10px;
+    overflow: hidden;
+    /* display: block; */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+}
+
+.home-product-item__price{
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+
+.home-product-item__price-old{
+    margin-left: 10px;
+    font-size: 1.4rem;
+    color: #666;
+    text-decoration: line-through;
+}
+
+.home-product-item__price-current{
+    font-size: 1.6rem;
+    color: var(--primary-color);
+    margin-left: 10px;
+}
+
+.home-product-item__action{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px 6px;
+    font-size: 1.4rem;
+}
+
+.home-product-item__like {
+    font-size: 1.3rem;
+}
+
+.home-product-item__like--liked{
+
+}
+
+i.home-product-item__like-fill{
+    display:none;
+    color: #f63d30;
+}
+
+.home-product-item__like--liked i.home-product-item__like-fill {
+    display:inline-block;
+}
+
+.home-product-item__like--liked i.home-product-item__like-empty{
+    display: none;
+}
+
+
+.home-product-item{
+
+}
+
+.home-product-item__rating{
+    font-size: 0.8rem;
+    margin:-2px 0 0 auto;
+
+}
+
+.home-product-item__star-gold {
+    color: var(--star-gold-color);
+}
+
+
+.home-product-item__sold {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-left: 6px;
+}
+
+.home-product-item__origin{
+    display: flex;
+    /* justify-content: space-between; */
+    margin: -3px 10px 0;
+    font-size: 1.2rem;
+    color: #595959;
+}
+
+
+.home-product-item__origin-name{
+    margin-left: auto;
+}
+
+.home-product-item__item__origin-brand{
+
+}
+
+.home-product__favourite{
+    position: absolute;
+    top: 10px;
+    left: -4px;
+    color: var(--primary-color);
+    background-color: currentColor;
+    font-size: 1.2rem;
+    font-weight: 400;
+    padding-right: 4px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+
+}
+
+.home-product__favourite:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    border-top: 3px solid currentColor;
+    border-left: 3px solid transparent;
+    filter:brightness(60%);
+}
+
+.home-product__favourite i {
+    font-size: 0.9rem;
+    color: var(--white-color);
+    margin: 0 2px 0px 4px;
+}
+
+.home-product__favourite span {
+    color: var(--white-color);
+}
+
+.home-product__sale-off{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 40px;
+    height: 36px;
+    text-align: center;
+    background-color: rgb(255,216,64,0.94);
+    border-top-right-radius: 2px;
+}
+
+.home-product__sale-off:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom:-4px;
+    border-width:0 20px 4px ;
+    border-style: solid;
+    color: rgb(255,216,64,0.94);
+    border-color: transparent currentColor transparent currentColor;
+}
+
+.home-product__sale-off-percent{
+    color: #ee4d2d;
+    font-weight: 500;
+    font-size: 1.3rem;
+    line-height:1.3rem;
+    margin-top: 1px;
+    display: block;
+}
+
+.home-product__sale-off-label{
+    color: var(--white-color);
+    font-weight: 500;
+    font-size: 1.3rem;
+    line-height:1.4rem;
+    margin-top: 1px;
+    display: block;
+}
+
+.home-product__pagination {
+    margin: 48px 0 32px 0;
+}

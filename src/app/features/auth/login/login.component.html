@@ -1,0 +1,73 @@
+<div class="flex justify-center">
+  <div class="auth-form login-form border-solid border-[1px] mt-3 mb-3 max-h-[400px]">
+    <div class="auth-form__container">
+      <div class="auth-form__header">
+        <h3 class="auth-form__heading">Đăng nhập</h3>
+        <span class="auth-form__switch-btn">Đăng ký</span>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="auth-form__form">
+          <div class="auth-form__group">
+            <input
+              type="text"
+              class="auth-form__input auth-form__email"
+              placeholder="Email"
+              [formControl]="form.controls.email"
+            />
+            @if(emailIsInvalid){
+            <span class="mt-2 text-sm text-red-500">
+              Please enter a valid email address
+            </span>
+            }
+          </div>
+          <div class="auth-form__group">
+            <input
+              type="password"
+              class="auth-form__input auth-form__password"
+              placeholder="Mật khẩu"
+              formControlName="password"
+            />
+            @if(passwordIsInvalid){
+            <span class="mt-2 text-sm text-red-500">
+              Enter password at least 3 characters
+            </span>
+            }
+          </div>
+        </div>
+
+        <div class="auth-form__aside">
+          <div class="auth-form__help">
+            <a href="" class="auth-form__help-link auth-form__help-forg"
+              >Quên mật khẩu</a
+            >
+            <span class="auth-form__help-separate"></span>
+            <a href="" class="auth-form__help-link">Cần trợ giúp</a>
+          </div>
+        </div>
+
+        <div class="auth-form__controls">
+          <button
+            (click)="back()"
+            class="btn btn--normal auth-form__controls-back"
+          >
+            TRỞ LẠI
+          </button>
+          <button class="btn btn--primary auth-form__controls-login">
+            ĐĂNG NHẬP
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="auth-form__socials">
+      <a class="auth-form__socials-fb btn btn--with-icon btn--size-s">
+        <i class="auth-form__socials-icon fa-brands fa-facebook"></i>
+        <span class="auth-form__socials-title"> Kết nối với facebook </span>
+      </a>
+      <div class="auth-form__socials-gg btn btn--with-icon btn--size-s">
+        <i class="auth-form__socials-icon fa-brands fa-google"></i>
+        <span class="auth-form__socials-title"> Kết nối với Google </span>
+      </div>
+    </div>
+  </div>
+</div>

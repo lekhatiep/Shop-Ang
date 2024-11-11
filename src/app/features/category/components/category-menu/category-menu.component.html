@@ -9,13 +9,11 @@
             <p class="text-red-400"> {{ error()}} </p>
         }
         @else{
-            <ul class="category-list">
+            <div class="category-list">
                 @for (item of categories(); track $index) {
-                    <li class="category-item">
-                        <a href="" class="category-item__link">{{item.name}}</a>
-                    </li>
+                    <app-category-menu-item [category]="item" (click)="onSelectCategory(item.id)" />
                 }
-            </ul>
+            </div>
         }    
     </nav>
 </div>

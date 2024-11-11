@@ -1,20 +1,24 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, signal, ViewEncapsulation } from '@angular/core';
 
+
+import { CategoryMenuItemComponent } from "../category-menu-item/category-menu-item.component";
 import { CategoryService } from '../../services/category.service';
-import { CategoryModel } from '../../models/category.model';
-import { HttpClient } from '@angular/common/http';
-import { CategoryResponse } from '../../models/category-response.model';
-import { catchError, map, throwError } from 'rxjs';
+import { ProductService } from '../../../product/services/product.service';
 
 @Component({
   selector: 'app-category-menu',
   standalone: true,
   styleUrl: './category-menu.component.css',
   templateUrl: './category-menu.component.html',
+  imports: [CategoryMenuItemComponent],
+  encapsulation: ViewEncapsulation.None
 })
 export class CategoryMenuComponent implements OnInit {
+  @Output() selectedCategory = new EventEmitter<number>();
+
   private categoryService = inject(CategoryService);
   private destroyRef = inject(DestroyRef);
+  private productService = inject(ProductService);
 
   error = signal('');
   isFetching = signal(false);
@@ -42,5 +46,9 @@ export class CategoryMenuComponent implements OnInit {
     this.destroyRef.onDestroy(()=>{
         subscription.unsubscribe();
     })
+  }
+
+  onSelectCategory(catID : number){
+    this.selectedCategory.emit(catID);
   }
 }

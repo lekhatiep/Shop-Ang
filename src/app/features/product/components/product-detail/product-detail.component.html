@@ -1,0 +1,156 @@
+<div class="max-w-[100%] flex pt-8">
+  <div class="md:w-[980px] m-auto">
+    <div class=" flex app-content product__detail">
+        <!-- <div class="grid__column-5"> -->
+        <div class="w-5/12">
+          <div class="product__detail-box-left">
+            <div class="product__box-left-img" style="background-image: url('{{ product()?.imagePath }}')"></div>
+            <div class="row product__box-left-list">
+              <div class="col-6 col-sm-4 col-lg-3 product__box-list-item">
+                <div class="product__box-list-item-img"></div>
+                <div class="product__box-list-item-border"></div>
+              </div>
+            </div>
+            <div class="row product__detail-social">
+              <div class="col-12 col-xl-6 product__detail-social-item">
+                <div>Chia sẻ:</div>
+                <ul class="product__detail-social-list">
+                  <li class="product__detail-social-list-item">
+                    <a href="" class="product__detail-social-item-link">
+                      <i
+                        class="product__detail-social-mes fa-brands fa-facebook-messenger"
+                      ></i>
+                    </a>
+                  </li>
+                  <li class="product__detail-social-list-item">
+                    <a href="" class="product__detail-social-item-link">
+                      <i class="product__detail-social-fb fa-brands fa-facebook"></i>
+                    </a>
+                  </li>
+                  <li class="product__detail-social-list-item">
+                    <a href="" class="product__detail-social-item-link">
+                      <i
+                        class="product__detail-social-pin fa-brands fa-pinterest"
+                      ></i>
+                    </a>
+                  </li>
+                  <li class="product__detail-social-list-item">
+                    <a href="" class="product__detail-social-item-link">
+                      <i class="product__detail-social-twi fa-brands fa-twitter"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 col-xl-6 product__detail-social-liked">
+                <!-- <i class="fa-solid fa-heart"></i> -->
+                <a href="" class="product__detail-social-like-link">
+                  <i class="product__detail-social-heart fa-regular fa-heart"></i>
+                </a>
+                <span>Đã thích (1.2k)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="grid__column-7"> -->
+        <div class="w-7/12">
+          <div class="row product__detail-box-right">
+            <h3 class="row product__detail-title">{{product()?.title}}</h3>
+            <div class="row product__detail-rating mt-4">
+              <div class="col-lg-3 col-md-4 col-sm-6 product__detail-star">
+                <a href="" class="product__detail-rating-link">
+                  <span>5.0</span>
+                  <i class="product__detail-star-gold fa-solid fa-star"></i>
+                  <i class="product__detail-star-gold fa-solid fa-star"></i>
+                  <i class="product__detail-star-gold fa-solid fa-star"></i>
+                  <i class="product__detail-star-gold fa-solid fa-star"></i>
+                  <i class="product__detail-star-gold fa-solid fa-star"></i>
+                </a>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6 product__detail-rate">
+                <a href="" class="product__rate-number-link">
+                  <span>555</span>
+                  Đánh giá
+                </a>
+              </div>
+              <div class="col-lg-3 col-md-4 col-sm-6 product__detail-sold">
+                <a href="" class="product__detail-sold-link">
+                  <span>2k</span>
+                  Đã bán
+                </a>
+              </div>
+            </div>
+            <div class="row product__detail-price mt-4">
+              <div
+                class="col-5 col-sm-4 col-md-3 col-lg-2 product__detail-price-sale"
+              >
+                <span id="cost">1.000.000</span><sup>đ</sup>
+              </div>
+              <div
+                class="col-5 col-sm-4 col-md-3 col-lg-2 product__detail-price-current"
+              >
+                {{product()?.price | number}}<sup>đ</sup>
+              </div>
+              <div
+                class="col-2 col-sm-4 col-md-3 offs col-lg-2 product__detail-percent-sale"
+              >
+                <p>-40% GIẢM</p>
+              </div>
+            </div>
+            <div class="row mt-4 product__detail-discount">
+              <div class="col-2 product__detail-discount-title">Mã giảm giá</div>
+              <div class="col-9 product__discount-list">
+                <div class="product__discount-list-item">Giảm 50K</div>
+                <div class="product__discount-list-item">Giảm 30K</div>
+                <div class="product__discount-list-item">Giảm 10K</div>
+              </div>
+            </div>
+            <div class="mt-4 product__detail-quantity">
+              <span>Số lượng</span>
+              <div class="product__quantity-warp">
+                <div class="product__quantity-warp-minus">
+                  <fa-icon class="product__detail-quantity-minus" [icon]="['fas','minus']"></fa-icon>
+                </div>
+                <div class="product__quantity-warp-current">
+                  <input
+                    type="text"
+                    class="product__quantity-current"
+                    aria-valuenow="1"
+                    value="1"
+                  />
+                </div>
+                <div class="product__quantity-warp-plus">
+                  <fa-icon class="product__detail-quantity-plus" [icon]="['fas','plus']"></fa-icon>
+                </div>
+              </div>
+              <h4 class="m-2">
+                Còn <span class="product__quantity-stock">0</span> sản phẩm
+              </h4>
+            </div>
+            <div class="mt-4 product__detail-add-cart">
+              <div class="product__detail-btn-add-cart">
+                <fa-icon class="product__detail-icon-add-cart" [icon]="['fas','cart-shopping']"></fa-icon>
+                Thêm vào giỏ hàng
+              </div>
+            </div>
+            <div
+              style="margin-top: 30px; border-top: 1px solid rgba(0, 0, 0, 0.05)"
+            ></div>
+          </div>
+        </div>
+      
+        <!-- </div> -->
+      </div>
+      <div class="row app-content product__description-wrapper">
+        <div class="my-3">
+          <h2 class="bg_title">MÔ TẢ SẢN PHẨM</h2>
+          <div class="my-4">
+            <p class="product__description-detail" id="description_detail">
+              Chưa có mô tả
+            </p>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+

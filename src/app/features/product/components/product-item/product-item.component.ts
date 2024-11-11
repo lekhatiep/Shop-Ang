@@ -1,21 +1,27 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterLink } from '@angular/router';
+
 import { ProductModel } from '../../model/product.model';
 
 @Component({
   selector: 'app-product-item',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './product-item.component.html',
-  styleUrl: './product-item.component.css'
+  styleUrl: './product-item.component.css',
 })
 export class ProductItemComponent {
-   @Input({required: true}) product: ProductModel | null = null;
+  @Input({ required: true }) product: ProductModel | null = null;
+  @Output() selectProductID = new EventEmitter<number>();
 
-   imageURL = '';
+  get ImagePath() {
+    return this.product?.productImages?.at(0)?.imagePath ?? '';
+  }
 
-   constructor(){
-    //this.imageURL = this.product?.productImages[0]?.imagePath;
-    console.log(this.product?.productImages);
-    
-   }
+  selectProduct(productID : number | undefined){
+    if(productID){
+      this.selectProductID.emit(productID)
+
+    }
+  }
 }
