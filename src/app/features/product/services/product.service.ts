@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, tap, throwError } from 'rxjs';
+import { catchError, map, single, tap, throwError, BehaviorSubject } from 'rxjs';
 
 import { API_URL, PAGE_SIZE } from '../../../core/constants/app.constants';
 import { ProductModel } from '../model/product.model';
@@ -16,19 +16,40 @@ export class ProductService {
 
   homeProducts = this.products.asReadonly();
   categorySelected = signal<number | null>(null);
-  
+  products$ = new BehaviorSubject<ProductModel[]>([]);
+
   // #region fetch API
-  loadAvailableProduct(pageNumber: number) {
-    return this.fetchProduct(
-      API_URL + `/api/Products?pageNumber=${pageNumber}&pageSize=${PAGE_SIZE}`,
+  loadAvailableProduct(pageNumber: number, searchText?: string) {
+
+    
+    let url =
+      API_URL + `/api/Products?pageNumber=${pageNumber}&pageSize=${PAGE_SIZE}`;
+
+    if (searchText) {
+      url += `?Search=` + searchText;
+    }
+    console.log('search');
+    const data = this.fetchProduct(
+      url,
       'Something went wrong when loading product'
-    ).pipe(tap((products) => this.products.set(products ?? [])));
+    ).pipe(tap((products) => {
+      this.products.set(products ?? [])
+      this.products$.next([...this.products()])
+      console.log(this.products$);
+      
+    }
+    ));
+
+   
+    return data;
+    
   }
 
   loadProductByCategory(catID: number, pageNumber: number) {
     return this.fetchProductByCategory(
       catID,
-      API_URL + `/api/Products/GetProductByCategory?${pageNumber}&pageSize=${PAGE_SIZE}`,
+      API_URL +
+        `/api/Products/GetProductByCategory?${pageNumber}&pageSize=${PAGE_SIZE}`,
       'Something went wrong when loading product'
     ).pipe(tap((products) => this.products.set(products ?? [])));
   }
@@ -77,7 +98,11 @@ export class ProductService {
     );
   }
 
-  private fetchProductAPI<T>(dataResponse : T,  url: string, errorMessage: string) {
+  private fetchProductAPI<T>(
+    dataResponse: T,
+    url: string,
+    errorMessage: string
+  ) {
     return this.httpClient.get<typeof dataResponse>(url).pipe(
       map((resData) => {
         return resData;

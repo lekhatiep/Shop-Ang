@@ -1,43 +1,49 @@
 <!-- Search -->
 <div class="header__search">
-  <div class="header__search-input-wrap">
-    <input
-      type="text"
-      class="header__search-input"
-      placeholder="Nhập để tìm kiếm"
-    />
-    <div class="header__search-history">
-      <h2 class="header__search-history-heading">Lịch sử tìm kiếm</h2>
-      <ul
-        class="header__search-history-list"
-        style="max-height: 300px; overflow-y: auto"
-      >
-        <li class="header__search-history-item">
-          <a href="" class="header__search-history-link"> Kem dưỡng da </a>
+  <form [formGroup]="formSearch" (ngSubmit)="onSubmit()" class="w-[100%] flex items-center">
+    <div class="header__search-input-wrap">
+      <input
+        type="text"
+        class="header__search-input"
+        name="searchText"
+        placeholder="Nhập để tìm kiếm"
+        formControlName="searchText"
+      />
+    </div>
+    <div class="header__search-select hide-tablet">
+      <span class="header__search-select-label">Trong shop</span>
+      <i class="header__search-select-icon fa-solid fa-angle-down"></i>
+      <ul class="header__search-option">
+        <li class="header__search-option-item header__search-option-item--active">
+          <span>Trong shop</span>
+          <i class="fa-solid fa-check"></i>
         </li>
-        <li class="header__search-history-item">
-          <a href="" class="header__search-history-link"> Máy ảnh </a>
+        <li class="header__search-option-item">
+          <span>Ngoài shop</span>
+          <i class="fa-solid fa-check"></i>
         </li>
       </ul>
     </div>
-  </div>
-  <div class="header__search-select hide-tablet">
-    <span class="header__search-select-label">Trong shop</span>
-    <i class="header__search-select-icon fa-solid fa-angle-down"></i>
-    <ul class="header__search-option">
-      <li class="header__search-option-item header__search-option-item--active">
-        <span>Trong shop</span>
-        <i class="fa-solid fa-check"></i>
+    <button class="header__search-btn">
+      <i class="header__search-btn-icon fa-solid fa-magnifying-glass size-9"></i>
+      <fa-icon class="header__search-btn-icon" [icon]="['fas','magnifying-glass']"></fa-icon>
+    </button>
+  </form>
+
+ 
+  <div class="header__search-history">
+    <h2 class="header__search-history-heading">Lịch sử tìm kiếm</h2>
+    <ul
+      class="header__search-history-list"
+      style="max-height: 300px; overflow-y: auto"
+    >
+      <li class="header__search-history-item">
+        <a href="" class="header__search-history-link"> Kem dưỡng da </a>
       </li>
-      <li class="header__search-option-item">
-        <span>Ngoài shop</span>
-        <i class="fa-solid fa-check"></i>
+      <li class="header__search-history-item">
+        <a href="" class="header__search-history-link"> Máy ảnh </a>
       </li>
     </ul>
   </div>
-  <button class="header__search-btn">
-    <i class="header__search-btn-icon fa-solid fa-magnifying-glass size-9"></i>
-    <fa-icon class="header__search-btn-icon" [icon]="['fas','magnifying-glass']"></fa-icon>
-  </button>
 </div>
 <!-- End of search -->

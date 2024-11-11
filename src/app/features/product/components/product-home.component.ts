@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   inject,
@@ -30,16 +31,28 @@ export class ProductHomeComponent implements OnInit {
   private productService = inject(ProductService);
   private destroyRef = inject(DestroyRef);
   private activatedRouter = inject(ActivatedRoute);
+  private  cdRef = inject(ChangeDetectorRef);
 
   error = signal('');
   isFetching = signal(false);
-  products = this.productService.homeProducts;
+  // products = this.productService.homeProducts;
+  products : ProductModel[] = [];
   productObservable: Observable<ProductModel[] | null> = new Observable();
   currentPage: number = 1;
   totalPages: number = 1;
 
   ngOnInit(): void {
     this.isFetching.set(true);
+    const sub = this.productService.products$.subscribe((listProducts)=>{
+      console.log(listProducts);
+      
+      this.products = listProducts;
+      this.cdRef.markForCheck();
+    })
+
+    this.destroyRef.onDestroy(()=>{
+      sub.unsubscribe();
+    })
   }
 
   ngOnChanges(changes: SimpleChanges) {

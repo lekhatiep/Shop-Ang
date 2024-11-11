@@ -1,7 +1,9 @@
 import {
   Component,
   ComponentRef,
+  EventEmitter,
   inject,
+  Output,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation,
@@ -31,6 +33,8 @@ import { LoginComponent } from '../../../features/auth/login/login.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
+  @Output() searchText = new EventEmitter<string>();
+
   modalContainerRef!: ViewContainerRef;
   private loginComponentRef: ComponentRef<LoginComponent> | null = null;
 
