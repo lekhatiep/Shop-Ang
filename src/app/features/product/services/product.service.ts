@@ -1,10 +1,18 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, single, tap, throwError, BehaviorSubject } from 'rxjs';
+import {
+  catchError,
+  map,
+  single,
+  tap,
+  throwError,
+  BehaviorSubject,
+} from 'rxjs';
 
 import { API_URL, PAGE_SIZE } from '../../../core/constants/app.constants';
 import { ProductModel } from '../model/product.model';
 import { ProductResponseModel } from '../model/product-response.model';
+import { ProductFilterModel } from '../model/product-filter.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -17,32 +25,54 @@ export class ProductService {
   homeProducts = this.products.asReadonly();
   categorySelected = signal<number | null>(null);
   products$ = new BehaviorSubject<ProductModel[]>([]);
+  isNextPage$ = new BehaviorSubject<boolean>(false);
+  filterModal: ProductFilterModel = {
+    pageNumber: 1,
+    pageSize : PAGE_SIZE
+  }
 
-  // #region fetch API
-  loadAvailableProduct(pageNumber: number, searchText?: string) {
+  totalPages = signal<number>(1);
 
-    
+  loadProductByFilter() {
+
+
     let url =
-      API_URL + `/api/Products?pageNumber=${pageNumber}&pageSize=${PAGE_SIZE}`;
-
-    if (searchText) {
-      url += `?Search=` + searchText;
-    }
-    console.log('search');
-    const data = this.fetchProduct(
-      url,
-      'Something went wrong when loading product'
-    ).pipe(tap((products) => {
-      this.products.set(products ?? [])
-      this.products$.next([...this.products()])
-      console.log(this.products$);
+      API_URL + `/api/Products/GetProductByName?pageNumber=${this.filterModal.pageNumber}&pageSize=${PAGE_SIZE}`;
+     
+    console.log(this.filterModal);
+    
+    if (this.filterModal.searchText) {
+      url += `&Search=` + this.filterModal.searchText;
       
     }
-    ));
+    if(this.filterModal.sortBy){
+      url += `&sortby=` + this.filterModal.sortBy;
+    }
 
-   
-    return data;
+    this.fetchProduct(
+      url,
+      'Something went wrong when loading product'
+    ).subscribe({next: (data) => {
+      this.products$.next(data ?? []), 
+      this.totalPages.set(data?.length ?? 1)
+      
+    }
+    })
     
+  }
+  // #region fetch API
+  loadAvailableProduct(pageNumber: number) {
+    let url =
+      API_URL + `/api/Products/?pageNumber=${pageNumber}&pageSize=${PAGE_SIZE}`;
+    return this.fetchProduct(
+      url,
+      'Something went wrong when loading product'
+    ).pipe(
+      tap((products) => {
+        this.products.set(products ?? []);
+        this.totalPages.set(products?.length ?? 1);
+      })
+    );
   }
 
   loadProductByCategory(catID: number, pageNumber: number) {

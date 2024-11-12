@@ -1,11 +1,11 @@
 <div class="row home-filter">
   <span class="col home-filter__label margin-bottom-12">Sắp xếp theo</span>
-  <button
+  <button (click)="onSortBy('popular_desc')" 
     class="col home-filter__btn btn home-filter__btn-popular margin-bottom-12 margin-left-12"
   >
     Phổ biến
   </button>
-  <button
+  <button (click)="onSortBy('new_desc')" 
     class="col home-filter__btn btn btn--primary home-filter__btn-newest margin-bottom-12 margin-left-12"
   >
     Mới nhất
@@ -23,12 +23,12 @@
     <i class="select-input__icon fa-solid fa-angle-down"></i>
     <ul class="select-input-list">
       <li class="select-input__item">
-        <a href="" class="select-input__link select-input__link-price-asc"
+        <a (click)="onSortBy('price_asc')" class="select-input__link select-input__link-price-asc"
           >Giá: Thấp đến cao</a
         >
       </li>
       <li class="select-input__item">
-        <a href="" class="select-input__link select-input__link-price-desc"
+        <a (click)="onSortBy('price_desc')" class="select-input__link select-input__link-price-desc"
           >Giá: Cao đến thấp</a
         >
       </li>
@@ -36,19 +36,19 @@
   </div>
   <div class="col home-filter__page d-flex justify-content-end">
     <span class="home-filter__page-num">
-      <span class="home-filter__page-cur">1</span>/<span
+      <span class="home-filter__page-cur">{{this.currentPage}}</span>/<span
         class="home-filter__page-total-page"
-        >1</span
+        >{{totalPages()}}</span
       >
     </span>
     <div class="home-filter__page-control">
       <a
-        href=""
+        (click)="prevPage()"
         class="home-filter__page-btn home-filter__page-btn--disabled home-filter__page-control-prev"
       >
         <fa-icon class="home-filter-page-icon " [icon]="['fas', 'angle-left']"></fa-icon>
       </a>
-      <a href="" class="home-filter__page-btn home-filter__page-control-next">
+      <a (click)="nextPage()" class="home-filter__page-btn home-filter__page-control-next">
         <fa-icon class="home-filter-page-icon " [icon]="['fas', 'angle-right']"></fa-icon>
       </a>
     </div>

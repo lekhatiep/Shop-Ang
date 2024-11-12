@@ -56,6 +56,7 @@ export class ProductHomeComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log('changes');
     
     if (changes['categoryId']) {
       this.loadHomeProduct(this.categoryId);
@@ -76,6 +77,7 @@ export class ProductHomeComponent implements OnInit {
     }
 
     const subscription = this.productObservable.subscribe({
+      next: (listProduct)=> this.products = listProduct ?? [],
       error: (error) => this.error.set(error.message),
       complete: () => {this.isFetching.set(false),
         this.totalPages = this.productService.productResponse()?.totalPages ?? 0

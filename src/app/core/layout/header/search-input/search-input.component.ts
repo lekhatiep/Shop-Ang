@@ -32,9 +32,7 @@ export class SearchInputComponent {
   @Output() searchText = new EventEmitter<string>();
 
   formSearch = new FormGroup({
-    searchText: new FormControl('', {
-      validators: Validators.required,
-    }),
+    searchText: new FormControl(''),
   });
 
   private productService = inject(ProductService);
@@ -44,13 +42,12 @@ export class SearchInputComponent {
   }
 
   onSubmit() {
-    console.log(this.formSearch.controls.searchText.value);
     if (!this.formSearch.valid) return;
 
     var searchTextControl = this.formSearch.controls.searchText;
     if (searchTextControl.valid) {
-      this.searchText.emit(searchTextControl.value ?? '');
-      this.productService.loadAvailableProduct(1,searchTextControl.value ?? '');
+      this.productService.filterModal.searchText = searchTextControl.value ?? '';
+      this.productService.loadProductByFilter();
     }
   }
 }

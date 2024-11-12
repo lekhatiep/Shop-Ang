@@ -1,13 +1,21 @@
 import {
+  ChangeDetectorRef,
   Component,
+  DestroyRef,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
+  FaIconLibrary,
+  FontAwesomeModule,
+} from '@fortawesome/angular-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { ProductService } from '../../../features/product/services/product.service';
 
 @Component({
   selector: 'app-pagination',
@@ -16,19 +24,38 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.css',
 })
-export class PaginationComponent implements OnChanges {
+export class PaginationComponent implements OnChanges, OnInit {
   @Input() totalPages: number = 1;
   @Input() currentPage: number = 1;
 
   @Output() pageChanged = new EventEmitter<number>();
+  private productService = inject(ProductService);
+  private destroyRef = inject(DestroyRef);
+  private cdRef = inject(ChangeDetectorRef);
 
   pageArray: (number | string)[] = []; // Array of pages and ellipses
 
-  constructor(fontLib : FaIconLibrary){
-    fontLib.addIcons(
-      faAngleLeft,
-      faAngleRight
-    )
+  constructor(fontLib: FaIconLibrary) {
+    fontLib.addIcons(faAngleLeft, faAngleRight);
+  }
+
+  ngOnInit(): void {
+    const sub = this.productService.isNextPage$.subscribe({
+      next: (isNext) => {
+        if (isNext) {
+          this.nextPage();
+          
+        }else{
+          this.previousPage();
+        }
+
+        this.cdRef.markForCheck();
+      },
+    });
+
+    this.destroyRef.onDestroy(() => {
+      sub.unsubscribe();
+    });
   }
 
   goToPage(page: number) {
