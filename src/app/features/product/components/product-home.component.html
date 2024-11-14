@@ -20,13 +20,16 @@
     }
   </div>
 
-  <div class="mt-2">
+  @if(products.length > 0){
+    <div class="mt-2">
     
-        <app-pagination
-        [currentPage]="currentPage"
-        [totalPages]="totalPages"
-        (pageChanged)="onPageChange($event)"
-        />
-    
-  </div>
+      <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages()"
+      (pageChanged)="onPageChange($event)"
+      />
+  
+</div>
+  }
+
 </div>

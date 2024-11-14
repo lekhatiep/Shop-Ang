@@ -1,26 +1,41 @@
 <div class="row home-filter">
   <span class="col home-filter__label margin-bottom-12">Sắp xếp theo</span>
   <button (click)="onSortBy('popular_desc')" 
-    class="col home-filter__btn btn home-filter__btn-popular margin-bottom-12 margin-left-12"
+    class="col home-filter__btn btn home-filter__btn-popular margin-bottom-12 margin-left-12 filter"
+    [ngClass]="{'active': isFilterTrend}"
   >
     Phổ biến
+    <fa-icon class="pl-1" [icon]="['fas', 'arrow-trend-up']"></fa-icon>
   </button>
   <button (click)="onSortBy('new_desc')" 
-    class="col home-filter__btn btn btn--primary home-filter__btn-newest margin-bottom-12 margin-left-12"
+    class="col home-filter__btn btn home-filter__btn-newest margin-bottom-12 margin-left-12 filter"
+    [ngClass]="{'active': isFilterNewest}"
   >
     Mới nhất
   </button>
   <button
     class="col home-filter__btn btn home-filter__btn-best-sale btn--disabled margin-bottom-12 margin-left-12"
+    
   >
     Bán chạy
   </button>
 
   <div
-    class="col-xl-2 col-sm-7 select-input margin-bottom-12-mb margin-left-12"
+    class="col-xl-2 col-sm-7 select-input margin-bottom-12-mb margin-left-12 filter"
+    [ngClass]="{'active': isFilterPrice}"
   >
-    <span class="select-input__label">Giá</span>
-    <i class="select-input__icon fa-solid fa-angle-down"></i>
+    <div>
+      <span class="select-input__label">Giá</span>
+      
+      @if(sortBys === 'price_asc'){
+        <fa-icon class="pl-1 color-[#ffff] text-xl" [icon]="['fas', 'angles-up']"></fa-icon>
+      }
+      @if(sortBys === 'price_desc'){
+        <fa-icon class="pl-1 color-[#ffff] text-xl" [icon]="['fas', 'angles-down']"></fa-icon>
+      }
+     
+    </div>
+    <fa-icon class="select-input__icon" [icon]="['fas', 'angle-down']"></fa-icon>
     <ul class="select-input-list">
       <li class="select-input__item">
         <a (click)="onSortBy('price_asc')" class="select-input__link select-input__link-price-asc"

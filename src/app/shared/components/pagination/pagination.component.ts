@@ -16,6 +16,7 @@ import {
 } from '@fortawesome/angular-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { ProductService } from '../../../features/product/services/product.service';
+import { PaginationService } from './pagination.service';
 
 @Component({
   selector: 'app-pagination',
@@ -29,7 +30,10 @@ export class PaginationComponent implements OnChanges, OnInit {
   @Input() currentPage: number = 1;
 
   @Output() pageChanged = new EventEmitter<number>();
+
   private productService = inject(ProductService);
+  private paginationService = inject(PaginationService);
+
   private destroyRef = inject(DestroyRef);
   private cdRef = inject(ChangeDetectorRef);
 
@@ -63,6 +67,7 @@ export class PaginationComponent implements OnChanges, OnInit {
       this.currentPage = page;
       this.pageChanged.emit(this.currentPage);
       this.generatePages(); // Regenerate page array when the page changes
+      this.paginationService.setCurrentPage(page);
     }
   }
 

@@ -37,7 +37,12 @@ export class CategoryService {
     },
   ];
 
-  categories = signal<CategoryModel[]>([]);
+  categories = signal<CategoryModel[]>([
+    {
+      id: 0,
+      name: 'Tất cả'
+    }
+  ]);
   loadedCategories = this.categories.asReadonly();
 
   loadAvailableCategories() {
@@ -46,7 +51,7 @@ export class CategoryService {
       'Something went wrong when fetching...'
     ).pipe(tap({
         next: (data)=>
-            this.categories.set( data ?? [])
+            this.categories.set( [...this.categories(),...data ?? []] )
         
     }));
   }

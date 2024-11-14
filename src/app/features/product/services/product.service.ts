@@ -28,37 +28,50 @@ export class ProductService {
   isNextPage$ = new BehaviorSubject<boolean>(false);
   filterModal: ProductFilterModel = {
     pageNumber: 1,
-    pageSize : PAGE_SIZE
+    pageSize: PAGE_SIZE,
+  };
+  categorySelectedSubject = new BehaviorSubject<number>(0);
+  categorySelected$ = this.categorySelectedSubject.asObservable();
+
+  setCatSelected(catID: number){
+    this.categorySelectedSubject.next(catID);
   }
+
+
+  //currentPage$ = this.currentPageSubject.asObservable();
+
+  //setCurrentPage(pageNumber: number){
+  // this.currentPageSubject.next(pageNumber);
+  //}
 
   totalPages = signal<number>(1);
 
   loadProductByFilter() {
-
-
     let url =
-      API_URL + `/api/Products/GetProductByName?pageNumber=${this.filterModal.pageNumber}&pageSize=${PAGE_SIZE}`;
-     
+      API_URL +
+      `/api/Products?pageNumber=${this.filterModal.pageNumber}&pageSize=${PAGE_SIZE}`;
+
     console.log(this.filterModal);
-    
+
     if (this.filterModal.searchText) {
       url += `&Search=` + this.filterModal.searchText;
-      
     }
-    if(this.filterModal.sortBy){
+    if (this.filterModal.sortBy) {
       url += `&sortby=` + this.filterModal.sortBy;
     }
 
-    this.fetchProduct(
+    if (this.filterModal.catID) {
+      url += `&categoryId=${this.filterModal.catID}`;
+    }
+
+    return this.fetchProduct(
       url,
       'Something went wrong when loading product'
-    ).subscribe({next: (data) => {
-      this.products$.next(data ?? []), 
-      this.totalPages.set(data?.length ?? 1)
-      
-    }
-    })
-    
+    ).subscribe({
+      next: (data) => {
+        this.products$.next(data ?? []);
+      },
+    });
   }
   // #region fetch API
   loadAvailableProduct(pageNumber: number) {
@@ -76,10 +89,9 @@ export class ProductService {
   }
 
   loadProductByCategory(catID: number, pageNumber: number) {
-    return this.fetchProductByCategory(
-      catID,
+    return this.fetchProduct(
       API_URL +
-        `/api/Products/GetProductByCategory?${pageNumber}&pageSize=${PAGE_SIZE}`,
+        `/api/Products?${pageNumber}&pageSize=${PAGE_SIZE}&categoryId=${catID}`,
       'Something went wrong when loading product'
     ).pipe(tap((products) => this.products.set(products ?? [])));
   }
@@ -112,7 +124,7 @@ export class ProductService {
   private fetchProduct(url: string, errorMessage: string) {
     return this.httpClient.get<ProductResponseModel>(url).pipe(
       map((resData) => {
-        this.productResponse.set(resData);
+        this.totalPages.set(resData.totalPages);
         return resData.data;
       }),
       catchError(() => throwError(() => new Error(errorMessage)))

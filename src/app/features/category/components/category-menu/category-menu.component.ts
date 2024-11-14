@@ -24,6 +24,7 @@ export class CategoryMenuComponent implements OnInit {
   isFetching = signal(false);
 
   categories = this.categoryService.loadedCategories;
+  selectedCatID = 0;
 
   ngOnInit(): void {
     this.isFetching.set(true);
@@ -49,6 +50,8 @@ export class CategoryMenuComponent implements OnInit {
   }
 
   onSelectCategory(catID : number){
-    this.selectedCategory.emit(catID);
+    //this.selectedCategory.emit(catID);
+    this.selectedCatID = catID;
+    this.productService.setCatSelected(catID);
   }
 }

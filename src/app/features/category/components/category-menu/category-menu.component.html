@@ -11,7 +11,7 @@
         @else{
             <div class="category-list">
                 @for (item of categories(); track $index) {
-                    <app-category-menu-item [category]="item" (click)="onSelectCategory(item.id)" />
+                    <app-category-menu-item [selected]="item.id == selectedCatID" [category]="item" (click)="onSelectCategory(item.id)" />
                 }
             </div>
         }    

@@ -1,8 +1,22 @@
 <!-- Search -->
-<div class="header__search">
-  <form [formGroup]="formSearch" (ngSubmit)="onSubmit()" class="w-[100%] flex items-center">
+<div class="header__search relative">
+  <form
+    [formGroup]="formSearch"
+    (ngSubmit)="onSubmit()"
+    class="w-[100%] flex items-center"
+  >
     <div class="header__search-input-wrap">
+      @if(isContainText){
+      <fa-icon
+        class="absolute top-1 mr-4 hover:bg-[#cccc] pl-[7.5px] pr-[7.5px] cursor-pointer"
+        (click)="clearTextSearch()"
+        [icon]="['fas', 'xmark']"
+      ></fa-icon>
+
+      }
       <input
+        (focus)="onFocus()"
+        (blur)="onBlur()"
         type="text"
         class="header__search-input"
         name="searchText"
@@ -11,38 +25,63 @@
       />
     </div>
     <div class="header__search-select hide-tablet">
-      <span class="header__search-select-label">Trong shop</span>
+      <span class="header__search-select-label">{{searchScopeText}}</span>
       <i class="header__search-select-icon fa-solid fa-angle-down"></i>
       <ul class="header__search-option">
-        <li class="header__search-option-item header__search-option-item--active">
+        <li
+        (click)="onChangeSearchScope()"
+          class="header__search-option-item header__search-option-item--active"
+        >
           <span>Trong shop</span>
           <i class="fa-solid fa-check"></i>
         </li>
-        <li class="header__search-option-item">
+        <li  
+          (click)="onChangeSearchScope()"
+        class="header__search-option-item">
           <span>Ngoài shop</span>
           <i class="fa-solid fa-check"></i>
         </li>
       </ul>
     </div>
     <button class="header__search-btn">
-      <i class="header__search-btn-icon fa-solid fa-magnifying-glass size-9"></i>
-      <fa-icon class="header__search-btn-icon" [icon]="['fas','magnifying-glass']"></fa-icon>
+      <i
+        class="header__search-btn-icon fa-solid fa-magnifying-glass size-9"
+      ></i>
+      <fa-icon
+        class="header__search-btn-icon"
+        [icon]="['fas', 'magnifying-glass']"
+      ></fa-icon>
     </button>
   </form>
 
- 
-  <div class="header__search-history">
+  <div *ngIf="isFocused" class="header__search-history">
     <h2 class="header__search-history-heading">Lịch sử tìm kiếm</h2>
     <ul
       class="header__search-history-list"
       style="max-height: 300px; overflow-y: auto"
     >
+      @for (item of historyList; track $index) {
       <li class="header__search-history-item">
+        <div class="flex items-center h-[38px]">
+          <fa-icon
+            (click)="removeItemHistory(item)"
+            class="mr-4 hover:bg-[#cccc] pl-[7.5px] pr-[7.5px]"
+            [icon]="['fas', 'xmark']"
+          ></fa-icon>
+          <a
+            (click)="searchItemHistory(item)"
+            class="header__search-history-link w-full"
+            >{{ item }}
+          </a>
+        </div>
+      </li>
+      }
+      <!-- <li class="header__search-history-item">
         <a href="" class="header__search-history-link"> Kem dưỡng da </a>
       </li>
       <li class="header__search-history-item">
         <a href="" class="header__search-history-link"> Máy ảnh </a>
-      </li>
+      </li> -->
     </ul>
   </div>
 </div>

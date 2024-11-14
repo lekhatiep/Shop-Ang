@@ -11,8 +11,8 @@
     outline: none;
     color: var(--text-color);
     font-size: 1.4rem;
-    padding: 0 8px;
     border-radius: 2px;
+    padding-left: 25px;
 }
 
 .header__search-select{
@@ -137,7 +137,7 @@
     background-color: var(--white-color);
     border-radius: 2px;
     box-shadow: 0 1px 5px #cbcbcb;
-    display: none;
+    /* display: none; */
     overflow: hidden;
     z-index: 1;
 }

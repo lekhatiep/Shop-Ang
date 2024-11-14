@@ -2,5 +2,6 @@ export interface ProductFilterModel{
     pageNumber?: number,
     pageSize?: number,
     sortBy?: string,
-    searchText?: string
+    searchText?: string,
+    catID?: number
 }

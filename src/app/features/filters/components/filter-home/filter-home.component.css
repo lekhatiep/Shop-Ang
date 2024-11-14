@@ -68,3 +68,8 @@
     margin: auto;
     color: #555;
 }
+
+.filter.active {
+    color: #f9f9f9;
+    background-color: var(--primary-color);
+}

@@ -16,7 +16,7 @@ import { ProductItemComponent } from './product-item/product-item.component';
 import { ProductModel } from '../model/product.model';
 
 import { ProductService } from '../services/product.service';
-import { PaginationComponent } from "../../../shared/components/pagination/pagination.component";
+import { PaginationComponent } from '../../../shared/components/pagination/pagination.component';
 @Component({
   selector: 'app-product-home',
   standalone: true,
@@ -31,58 +31,49 @@ export class ProductHomeComponent implements OnInit {
   private productService = inject(ProductService);
   private destroyRef = inject(DestroyRef);
   private activatedRouter = inject(ActivatedRoute);
-  private  cdRef = inject(ChangeDetectorRef);
+  private cdRef = inject(ChangeDetectorRef);
 
   error = signal('');
   isFetching = signal(false);
-  // products = this.productService.homeProducts;
-  products : ProductModel[] = [];
+
+  products: ProductModel[] = [];
   productObservable: Observable<ProductModel[] | null> = new Observable();
   currentPage: number = 1;
-  totalPages: number = 1;
+  totalPages = this.productService.totalPages;
 
   ngOnInit(): void {
-    this.isFetching.set(true);
-    const sub = this.productService.products$.subscribe((listProducts)=>{
-      console.log(listProducts);
-      
-      this.products = listProducts;
-      this.cdRef.markForCheck();
-    })
-
-    this.destroyRef.onDestroy(()=>{
-      sub.unsubscribe();
-    })
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('changes');
+    console.log('init');
     
-    if (changes['categoryId']) {
-      this.loadHomeProduct(this.categoryId);
+    this.isFetching.set(true);
+    const sub = this.productService.products$.subscribe({
+      next: (listProducts) => {
+        this.products = listProducts;
+        this.isFetching.set(false);
+        this.cdRef.markForCheck();
+      }
+    });
+
+    const subCatSelect = this.productService.categorySelected$.subscribe({
+      next: (catId) => {
+        console.log('cat');
+        this.categoryId = catId;
+        this.loadHomeProduct();
+        this.cdRef.markForCheck();
+      }
+    
+    });
+
+    this.destroyRef.onDestroy(() => {
       
-    }
+      sub.unsubscribe();
+      subCatSelect.unsubscribe();
+    });
   }
 
-  loadHomeProduct(categoryId: number | null) {
+  loadHomeProduct() {
     //Load product by cat if router has catID
-   
-    if (categoryId) {
-      this.productObservable = this.productService.loadProductByCategory(
-        categoryId,
-        this.currentPage
-      );
-    } else {
-      this.productObservable = this.productService.loadAvailableProduct(this.currentPage);
-    }
-
-    const subscription = this.productObservable.subscribe({
-      next: (listProduct)=> this.products = listProduct ?? [],
-      error: (error) => this.error.set(error.message),
-      complete: () => {this.isFetching.set(false),
-        this.totalPages = this.productService.productResponse()?.totalPages ?? 0
-      },
-    });
+    this.productService.filterModal.catID = this.categoryId ?? 0;
+    const subscription = this.productService.loadProductByFilter();
 
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();
@@ -90,9 +81,8 @@ export class ProductHomeComponent implements OnInit {
   }
 
   onPageChange(page: number) {
-    
     this.currentPage = page;
-    this.loadHomeProduct(this.categoryId); // Load data for the selected page
+    this.productService.filterModal.pageNumber = page;
+    this.loadHomeProduct(); // Load data for the selected page
   }
-
 }
