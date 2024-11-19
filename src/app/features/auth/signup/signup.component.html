@@ -1,0 +1,80 @@
+<div class="flex justify-center">
+  <div class="auth-form register-form">
+    <div
+      class="auth-form__container border-solid border-[1px] mt-3 mb-3 max-h-[400px]"
+    >
+      <div class="auth-form__header">
+        <h3 class="auth-form__heading">Đăng ký</h3>
+        <span class="auth-form__switch-btn">Đăng nhập</span>
+      </div>
+
+      <form [formGroup]="formRegistration" (ngSubmit)="onSubmit()">
+        <div class="auth-form__form">
+          <div class="auth-form__group">
+            <input
+              type="text"
+              class="auth-form__input"
+              placeholder="Email"
+              formControlName="email"
+              (focusout)="onFocusOutEmail()"
+            />
+            @if(this.existMail){
+            <span class="text-red-500">This email already used !!!</span>
+            }
+          </div>
+
+          <div formGroupName="passwordGroup">
+            <div class="auth-form__group">
+              <input
+                type="password"
+                class="auth-form__input"
+                placeholder="Mật khẩu"
+                formControlName="password"
+              />
+            </div>
+            <div class="auth-form__group">
+              <input
+                type="password"
+                class="auth-form__input"
+                placeholder="Nhập lại mật khẩu"
+                formControlName="confirmPassword"
+              />
+              @if(this.passwordGroupInvalid){
+              <span class="text-red-500">Password not match !!! </span>
+              } @if(this.passwordsInvalid){
+              <span class="text-red-500">Require min length (3) </span>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-form__aside">
+          <p class="auth-form__policy-text">
+            Bằng việc đăng kí, bạn đã đồng ý với Tshop về
+            <a href="" class="auth-form__text-link">Điều khoản dịch vụ</a> &
+            <a href="" class="auth-form__text-link">Chính sách bảo mật</a>
+          </p>
+        </div>
+
+        <div class="auth-form__controls">
+          <button class="btn btn--normal auth-form__controls-back">
+            TRỞ LẠI
+          </button>
+          <button class="btn btn--primary auth-form__controls-register">
+            ĐĂNG KÝ
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="auth-form__socials">
+      <a class="auth-form__socials-fb btn btn--with-icon btn--size-s">
+        <i class="auth-form__socials-icon fa-brands fa-facebook"></i>
+        <span class="auth-form__socials-title"> Kết nối với facebook </span>
+      </a>
+      <a class="auth-form__socials-gg btn btn--with-icon btn--size-s">
+        <i class="auth-form__socials-icon fa-brands fa-google"></i>
+        <span class="auth-form__socials-title"> Kết nối với Google </span>
+      </a>
+    </div>
+  </div>
+</div>

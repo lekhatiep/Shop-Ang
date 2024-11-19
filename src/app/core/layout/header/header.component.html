@@ -51,7 +51,10 @@
           class="col-md-3 col-lg-3 ps-lg-5 ps-xl-0 col-xl-2 header__navbar-item header__navbar-item--has-notify"
         >
           <a href="" class="header__navbar-item-link">
-            <fa-icon class="header__navbar-icon" [icon]="['far','bell']"></fa-icon>
+            <fa-icon
+              class="header__navbar-icon"
+              [icon]="['far', 'bell']"
+            ></fa-icon>
             Thông báo
           </a>
           <div class="header__notify">
@@ -126,22 +129,28 @@
         <li class="col-md-3 col-lg-2 col-xl-2 header__navbar-item">
           <a href="" class="header__navbar-item-link">
             <i class="header__navbar-icon fa-regular fa-circle-question"></i>
-            <fa-icon class="header__navbar-icon" [icon]="['far','circle-question']"></fa-icon>
+            <fa-icon
+              class="header__navbar-icon"
+              [icon]="['far', 'circle-question']"
+            ></fa-icon>
             Trợ giúp
           </a>
         </li>
         <!-- Login logout -->
+        @if(!this.isAuthenticated){
         <li
           class="header__navbar-item header__navbar-item--strong header__navbar-item--separate header__navbar-register"
         >
           Đăng ký
         </li>
         <li
-          class="header__navbar-item header__navbar-item--strong header__navbar-item-login" (click)="openModalLogin()"
+          class="header__navbar-item header__navbar-item--strong header__navbar-item-login"
+          (click)="openModalLogin()"
         >
           Đăng nhập
         </li>
-        <li class="header__navbar-item header__navbar-user hide">
+        } @if(this.isAuthenticated){
+        <li class="header__navbar-item header__navbar-user">
           <img
             src="https://www.kindpng.com/picc/m/78-786207_user-avatar-png-user-avatar-icon-png-transparent.png"
             alt=""
@@ -164,10 +173,11 @@
             <li
               class="header__navbar-user-item header__navbar-user-item-separate header__navbar-logout"
             >
-              <a href="">Đăng xuất</a>
+              <a (click)="logOut()">Đăng xuất</a>
             </li>
           </ul>
         </li>
+        }
       </ul>
     </nav>
     <!-- Header search -->
@@ -185,9 +195,9 @@
       </div>
       <!-- End of logo -->
       <!-- Search -->
-       <div class="flex-1">
-         <app-search-input></app-search-input>
-       </div>
+      <div class="flex-1">
+        <app-search-input></app-search-input>
+      </div>
       <!-- End of search -->
 
       <!-- Cart layout -->
@@ -197,7 +207,10 @@
                     <span class="header__cart-notice">0</span> -->
           <a href="./pages/cart/" class="header__cart-link">
             <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
-            <fa-icon class="header__search-btn-icon text-white text-2xl" [icon]="['fas', 'cart-shopping']"></fa-icon>
+            <fa-icon
+              class="header__search-btn-icon text-white text-2xl"
+              [icon]="['fas', 'cart-shopping']"
+            ></fa-icon>
             <span class="header__cart-notice">0</span>
           </a>
           <!-- No car: header__cart-list-no-cart -->

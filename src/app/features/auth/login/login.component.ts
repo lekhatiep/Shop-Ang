@@ -9,6 +9,8 @@ import {
 
 import { ModalService } from '../../../shared/modal/modal.service';
 import { debounceTime, of } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 function mustContainQuestionMark(control: AbstractControl) {
   if (control.value.includes('?')) {
@@ -41,6 +43,8 @@ if (savedForm) {
 export class LoginComponent {
   @Input() isModal: boolean = false;
   private destroyRef = inject(DestroyRef);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
   form = new FormGroup({
     email: new FormControl(initialEmailValue, {
@@ -59,8 +63,6 @@ export class LoginComponent {
   private modalService = inject(ModalService);
 
   back() {
-    console.log('back');
-
     if (this.isModal) {
       this.modalService.closeModal();
     }
@@ -68,10 +70,16 @@ export class LoginComponent {
 
   onSubmit() {
     console.log(this.form);
-    const enteredEmail = this.form.value.email;
-    const enteredPassword = this.form.value.password;
+    const enteredEmail = this.form.value.email ?? '';
+    const enteredPassword = this.form.value.password ?? '';
 
-    console.log(enteredEmail, enteredPassword);
+    const subLogin = this.authService
+      .login(enteredEmail, enteredPassword)
+      .subscribe(() => this.router.navigate(['/']));
+
+    this.destroyRef.onDestroy(() => {
+      subLogin.unsubscribe();
+    });
   }
 
   get emailIsInvalid() {
@@ -90,12 +98,6 @@ export class LoginComponent {
     );
   }
   ngOnInit() {
-    // const savedForm = localStorage.getItem('saved-login-form');
-    // if (savedForm) {
-    //   const loadedForm = JSON.parse(savedForm);
-    //   this.form.patchValue({ email: loadedForm.email });
-    // }
-
     const subscription = this.form.valueChanges
       .pipe(debounceTime(1000))
       .subscribe({
