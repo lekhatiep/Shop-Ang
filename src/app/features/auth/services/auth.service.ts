@@ -104,4 +104,12 @@ export class AuthService {
       .post<RegisterModel>(url, register)
       .pipe(catchError(() => throwError(() => new Error('Register Failed'))));
   }
+
+  getToken(){
+    let token = "";
+    this.user$.subscribe(user => {
+      token = user?.token ?? ''
+    })
+    return token;
+  }
 }

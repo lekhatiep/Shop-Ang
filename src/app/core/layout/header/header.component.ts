@@ -25,13 +25,14 @@ import { ModalService } from '../../../shared/modal/modal.service';
 import { LoginComponent } from '../../../features/auth/login/login.component';
 import { AuthService } from '../../../features/auth/services/auth.service';
 import { Subscription } from 'rxjs';
+import { HeaderCartListComponent } from "./header-cart-list/header-cart-list.component";
 
 @Component({
   selector: 'app-header',
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
-  imports: [FontAwesomeModule, SearchInputComponent, SearchInputComponent],
+  imports: [FontAwesomeModule, SearchInputComponent, SearchInputComponent, HeaderCartListComponent],
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {

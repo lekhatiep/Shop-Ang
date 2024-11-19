@@ -563,7 +563,7 @@
     border-radius: 2px;
     box-shadow: 0 1px 3.125rem 0  rgba(0, 0, 0, 0.2);
     cursor: default;
-    display: none;
+    display: block;
     z-index: 1;
   
 }
