@@ -8,7 +8,7 @@ import { ContainerComponent } from "../container/container.component";
 @Component({
   selector: 'app-user-layout',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, RouterOutlet, ContainerComponent, RouterOutlet],
+  imports: [HeaderComponent, FooterComponent, RouterOutlet],
   templateUrl: './user-layout.component.html',
   styleUrl: './user-layout.component.css'
 })
