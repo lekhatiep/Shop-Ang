@@ -107,37 +107,50 @@
             <div class="mt-4 product__detail-quantity">
               <span>Số lượng</span>
               <div class="product__quantity-warp">
-                <div class="product__quantity-warp-minus">
+                <div (click)="decrease()" class="product__quantity-warp-minus">
                   <fa-icon class="product__detail-quantity-minus" [icon]="['fas','minus']"></fa-icon>
                 </div>
-                <div class="product__quantity-warp-current">
+                <div class="product__quantity-warp-current" [formGroup]="quantityGroup">
                   <input
                     type="text"
                     class="product__quantity-current"
                     aria-valuenow="1"
-                    value="1"
+                    [value]="currentQuantity"
+                    formControlName = "inputQuantity"
                   />
                 </div>
-                <div class="product__quantity-warp-plus">
+                <div (click)="increase()" class="product__quantity-warp-plus">
                   <fa-icon class="product__detail-quantity-plus" [icon]="['fas','plus']"></fa-icon>
                 </div>
               </div>
+              
               <h4 class="m-2">
-                Còn <span class="product__quantity-stock">0</span> sản phẩm
+                Còn <span class="product__quantity-stock">{{quantity}}</span> sản phẩm
               </h4>
             </div>
+            @if(quantityInValid){
+              <div>
+                <span class="text-red-400">Đã vượt quá số lượng tồn tại</span>
+              </div>
+            }
+            
             <div class="mt-4 product__detail-add-cart">
-              <div class="product__detail-btn-add-cart">
+              <div (click)="addToCart()" class="product__detail-btn-add-cart">
                 <fa-icon class="product__detail-icon-add-cart" [icon]="['fas','cart-shopping']"></fa-icon>
                 Thêm vào giỏ hàng
               </div>
             </div>
+            <div class="card flex justify-content-center gap-2">
+              <p-toast key="toast1" />
+  
+          </div>
+            
             <div
               style="margin-top: 30px; border-top: 1px solid rgba(0, 0, 0, 0.05)"
             ></div>
           </div>
         </div>
-      
+       
         <!-- </div> -->
       </div>
       <div class="row app-content product__description-wrapper">
