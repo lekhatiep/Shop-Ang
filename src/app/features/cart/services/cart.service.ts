@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { CartItemModel } from '../models/cart-item.model';
 import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
+
+import { CartItemModel } from '../models/cart-item.model';
 import { AuthService } from '../../auth/services/auth.service';
+import { API_URL } from '../../../core/constants/app.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +25,7 @@ export class CartService {
     };
     return this.httpClient
       .get<CartItemModel[]>(
-        'https://localhost:5001/api/Carts/GetListCart',
+        API_URL+'/api/Carts/GetListCart',
         options
       )
       .pipe(

@@ -81,12 +81,12 @@ export class FilterHomeComponent implements OnInit {
     this.productService.loadProductByFilter();
   }
 
-  nextPage() {
+  nextPage() { 
     if (this.currentPage < this.totalPages()) {
+      this.currentPage++;
       this.productService.filterModal.pageNumber = this.currentPage;
       this.productService.loadProductByFilter();
       this.productService.isNextPage$.next(true);
-      this.currentPage++;
     }
   }
 

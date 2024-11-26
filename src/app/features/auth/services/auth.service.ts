@@ -19,7 +19,7 @@ export class AuthService {
   user$ = new BehaviorSubject<User | null>(null);
 
   checkEmailExist(email: string) {
-    const url = 'https://localhost:5001/api/Users/CheckEmailExists';
+    const url = API_URL+ '/api/Users/CheckEmailExists';
     return this.httpClient
       .get<boolean>(url, {
         params: {
@@ -35,7 +35,7 @@ export class AuthService {
   
 
   login(email: string, password: string) {
-    const url = 'https://localhost:5001/api/Users/login';
+    const url = API_URL+ '/api/Users/login';
     return this.httpClient
       .post<LoginResponseModel>(url, {
         email,
@@ -77,6 +77,8 @@ export class AuthService {
     const expirationDuration = new  Date(storeUser._tokenExpirationDate).getTime() - new Date().getTime() 
     this.user$.next(storeUser);
     this.autoLogout(expirationDuration);
+    
+    
   }
 
   logout() {
@@ -93,13 +95,14 @@ export class AuthService {
   }
 
   autoLogout(expirationDuration: number) {
+    console.log(expirationDuration);
     this.timerExpirationDuration = setTimeout(() => {
       this.logout();
     }, expirationDuration);
   }
 
   register(register: RegisterModel) {
-    const url = 'https://localhost:5001/api/Users/register';
+    const url = API_URL +'/api/Users/register';
     return this.httpClient
       .post<RegisterModel>(url, register)
       .pipe(catchError(() => throwError(() => new Error('Register Failed'))));

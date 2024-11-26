@@ -51,7 +51,6 @@ export class SearchInputComponent implements OnInit {
 
   constructor(library: FaIconLibrary) {
     library.addIcons(faMagnifyingGlass,faXmark);
-    console.log(library);
     
   }
 
