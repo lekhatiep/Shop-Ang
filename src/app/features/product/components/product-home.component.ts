@@ -42,7 +42,6 @@ export class ProductHomeComponent implements OnInit {
   totalPages = this.productService.totalPages;
 
   ngOnInit(): void {
-    console.log('init');
     
     this.isFetching.set(true);
     const sub = this.productService.products$.subscribe({
@@ -55,7 +54,6 @@ export class ProductHomeComponent implements OnInit {
 
     const subCatSelect = this.productService.categorySelected$.subscribe({
       next: (catId) => {
-        console.log('cat');
         this.categoryId = catId;
         this.loadHomeProduct();
         this.cdRef.markForCheck();

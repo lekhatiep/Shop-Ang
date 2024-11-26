@@ -27,7 +27,6 @@ export class ProductByCatComponent {
   private routeSubscription!: Subscription;
   
   ngOnInit(): void {
-    console.log('init');
     //this.getHomeProduct()
     this.isFetching.set(true);
 

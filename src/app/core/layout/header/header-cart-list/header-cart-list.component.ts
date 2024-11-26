@@ -22,13 +22,17 @@ export class HeaderCartListComponent implements OnInit {
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
       this.isLogged = !user ? false : true;
+      if(user){
+        this.loadListCart();
+      }
     });
 
     this.cartService.listCartSubject$.subscribe((dataUpdate)=> {
       this.listCarts = dataUpdate;
     });
 
-    this.loadListCart();
+    console.log(this.listCarts.length > 0);
+    
   }
 
   loadListCart(){

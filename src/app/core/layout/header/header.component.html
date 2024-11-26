@@ -205,7 +205,7 @@
         <div class="header__cart-wrap">
           <!-- <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
                     <span class="header__cart-notice">0</span> -->
-          <a href="./pages/cart/" class="header__cart-link">
+          <a href="./pages/cart/" class="header__cart-link"  (mouseenter)="opCartList.toggle($event)">
             <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
             <fa-icon
               class="header__search-btn-icon text-white text-2xl"
@@ -213,11 +213,16 @@
             ></fa-icon>
             <span class="header__cart-notice">0</span>
           </a>
-          <!-- No car: header__cart-list-no-cart -->
-           <div class="">
-             <app-header-cart-list/>
 
-           </div>
+          <!-- No car: header__cart-list-no-cart -->
+          <p-overlayPanel #opCartList>
+            <ng-template pTemplate>  
+              <div class="header__cart-list">
+                <app-header-cart-list/>
+              </div>
+          </ng-template> 
+            
+          </p-overlayPanel>
         </div>
       </div>
       <!-- End of cart -->

@@ -51,8 +51,6 @@ export class ProductService {
       API_URL +
       `/api/Products?pageNumber=${this.filterModal.pageNumber}&pageSize=${PAGE_SIZE}`;
 
-    console.log(this.filterModal);
-
     if (this.filterModal.searchText) {
       url += `&Search=` + this.filterModal.searchText;
     }
