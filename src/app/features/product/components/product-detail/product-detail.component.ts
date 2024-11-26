@@ -150,10 +150,10 @@ export class ProductDetailComponent implements OnInit {
     if (this.quantityGroup.controls.inputQuantity.valid) {
 
       let newItem : CartItemModel = {
-        productId: this.id,
+        productId: +this.id,
         imgPath: this.product()?.imagePath || '',
         quantity: this.currentQuantity,
-        price: this.product()?.price + '',
+        price: this.product()?.price || 0 ,
         userID: 0,
       }
 

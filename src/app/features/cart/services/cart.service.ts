@@ -13,6 +13,7 @@ export class CartService {
 
   listCartSubject$ = new BehaviorSubject<CartItemModel[]>([]);
   listCart = signal<CartItemModel[]>([]);
+  listCartLocal : CartItemModel[] = [];
 
   getListCart() {
     const options = {
@@ -49,5 +50,59 @@ export class CartService {
     });
 
     return syncCart;
+  }
+
+  getListCartLocal(){
+    const listCartData = localStorage.getItem('listCart');
+    let listCartLocal : CartItemModel[] = [];
+    if (listCartData) {
+      const listCartItem: CartItemModel[] = JSON.parse(listCartData);
+
+       return listCartLocal = listCartItem;
+    }else{
+      return [];
+    }
+  }
+
+  removeCartItem(productID: number){
+
+    let listCartLocal = this.getListCartLocal();
+    
+    listCartLocal = listCartLocal.filter(x=> x.productId !== productID);
+
+    const cartUpdated = this.syncListCart(listCartLocal, this.listCart())
+
+    localStorage.setItem('listCart', JSON.stringify(cartUpdated));
+    this.listCartSubject$.next(cartUpdated);
+
+  }
+
+  syncListCartItemToServer(){
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.authService.getToken()}`,
+      }),
+    };
+
+    const data = this.getListCartLocal();
+    
+    this.listCart;
+
+
+    return this.httpClient
+      .post<CartItemModel[]>(
+        'https://localhost:5001/api/Carts/SyncListCart',
+        data,
+        options        
+      )
+      .pipe(
+        map((resData) => {
+          this.listCart.set(resData);
+          this.listCartSubject$.next(resData);
+          return resData;
+        }),
+        catchError(() => throwError(() => Error('Cannot get list cart')))
+      );
   }
 }

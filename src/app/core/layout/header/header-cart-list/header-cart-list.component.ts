@@ -32,19 +32,19 @@ export class HeaderCartListComponent implements OnInit {
   }
 
   loadListCart(){
-    const listCartData = localStorage.getItem('listCart');
-    let listCartLocal : CartItemModel[] = [];
-    if (listCartData) {
-      const listCartItem: CartItemModel[] = JSON.parse(listCartData);
+    const listCartLocal = this.cartService.getListCartLocal();
 
-      listCartLocal = listCartItem;
-    }
+    // this.cartService.getListCart().subscribe({
+    //   next: (data)=> {
+    //     this.listCarts = this.cartService.syncListCart(listCartLocal, data)
+    //   }
+    // })
 
-    this.cartService.getListCart().subscribe({
-      next: (data)=> {
-        this.listCarts = this.cartService.syncListCart(listCartLocal, data)
-      }
-    })
+    this.cartService.syncListCartItemToServer().subscribe({
+        next: (data)=> {
+          this.listCarts = data;
+        }
+      })
   }
 
   
