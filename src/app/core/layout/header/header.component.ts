@@ -4,6 +4,7 @@ import {
   EventEmitter,
   inject,
   Output,
+  signal,
   ViewContainerRef,
   ViewEncapsulation,
 } from '@angular/core';
@@ -27,6 +28,7 @@ import { AuthService } from '../../../features/auth/services/auth.service';
 import { SearchInputComponent } from './search-input/search-input.component';
 import { LoginComponent } from '../../../features/auth/login/login.component';
 import { HeaderCartListComponent } from './header-cart-list/header-cart-list.component';
+import { CartService } from '../../../features/cart/services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -52,6 +54,9 @@ export class HeaderComponent {
   vcr = inject(ViewContainerRef);
   private modalService = inject(ModalService);
   private authService = inject(AuthService);
+  private cartService = inject(CartService);
+
+  countItem = signal<number>(0);
 
   constructor(library: FaIconLibrary) {
     library.addIcons(
@@ -71,6 +76,10 @@ export class HeaderComponent {
     this.userSub = this.authService.user$.subscribe((user) => {
       this.isAuthenticated = !user ? false : true;
     });
+
+    this.cartService.listCartSubject$.subscribe((data) =>
+      this.countItem.set(data.length)
+    );
   }
 
   openModalLogin() {

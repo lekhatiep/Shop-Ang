@@ -709,7 +709,6 @@
 }
 
 .header__cart-list-no-cart-msg{
-    display: none;
     font-size: 1.4rem;
     margin-top: 8px;
     color: var(--text-color);
@@ -734,3 +733,24 @@
     right: -4px;
     /* right: 30px; */
 }
+
+  
+ .p-overlaypanel::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 8px 0 8px; /* Điều chỉnh kích thước mũi tên */
+    border-color: #ffffff transparent transparent transparent; /* Màu của mũi tên */
+    top: -8px; /* Định vị mũi tên lên trên */
+    left: calc(var(--overlayArrowLeft, 0) + 3.25rem); /* Điều chỉnh vị trí ngang của mũi tên */
+  }
+  
+  .p-overlaypanel::before {
+    transform: rotate(180deg);
+  }
+  
+  .op-cartlist .p-overlaypanel-content {
+    padding: 4px;
+  }

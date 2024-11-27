@@ -103,21 +103,24 @@ export class ProductDetailComponent implements OnInit {
       subRout.unsubscribe();
     });
 
+    const subListCart = this.cartService.listCartSubject$.subscribe((list)=>{
+      this.listCartItem = list
+    })
+
     //load list cart temp
-    const listCartData = localStorage.getItem('listCart');
-    if (listCartData) {
-      this.listCartItem = JSON.parse(listCartData);
-    }
+   
 
     //obs user 
-
-    const subUser = this.authService.user$.subscribe(user=>{
-        this.isLogin = user ? true : false
-    })
-
-    this.destroyRef.onDestroy(()=> {
-      subUser.unsubscribe();
-    })
+    this.isLogin = this.authService.isLogged();
+    if(this.isLogin){
+      this.cartService.syncListCartItemToServer().subscribe()
+    }else{ 
+      const listCartData = localStorage.getItem('listCart');
+      if (listCartData) {
+        this.listCartItem = JSON.parse(listCartData);
+        this.cartService.listCartSubject$.next(this.listCartItem);
+      }
+    }
   }
 
   loadProductDetail() {

@@ -69,7 +69,6 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    console.log(this.form);
     const enteredEmail = this.form.value.email ?? '';
     const enteredPassword = this.form.value.password ?? '';
 
@@ -77,9 +76,9 @@ export class LoginComponent {
       .login(enteredEmail, enteredPassword)
       .subscribe(() => this.router.navigate(['/']));
 
-    this.destroyRef.onDestroy(() => {
-      subLogin.unsubscribe();
-    });
+    // this.destroyRef.onDestroy(() => {
+    //   subLogin.unsubscribe();
+    // });
   }
 
   get emailIsInvalid() {

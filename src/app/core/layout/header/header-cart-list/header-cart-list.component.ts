@@ -28,28 +28,21 @@ export class HeaderCartListComponent implements OnInit {
     });
 
     this.cartService.listCartSubject$.subscribe((dataUpdate)=> {
-      this.listCarts = dataUpdate;
+      this.listCarts = dataUpdate;      
     });
-
-    console.log(this.listCarts.length > 0);
     
+    //Not login: load from local
+    if(!this.isLogged){
+      this.listCarts = this.cartService.getListCartLocal();
+    }
   }
 
   loadListCart(){
-    const listCartLocal = this.cartService.getListCartLocal();
-
-    // this.cartService.getListCart().subscribe({
-    //   next: (data)=> {
-    //     this.listCarts = this.cartService.syncListCart(listCartLocal, data)
-    //   }
-    // })
-
     this.cartService.syncListCartItemToServer().subscribe({
         next: (data)=> {
           this.listCarts = data;
+          this.cartService.setListCartLocal(data);
         }
       })
   }
-
-  
 }

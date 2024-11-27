@@ -211,17 +211,14 @@
               class="header__search-btn-icon text-white text-2xl"
               [icon]="['fas', 'cart-shopping']"
             ></fa-icon>
-            <span class="header__cart-notice">0</span>
+            <span class="header__cart-notice">{{countItem()}}</span>
           </a>
 
           <!-- No car: header__cart-list-no-cart -->
-          <p-overlayPanel #opCartList>
-            <ng-template pTemplate>  
+          <p-overlayPanel #opCartList styleClass="op-cartlist" >
               <div class="header__cart-list">
                 <app-header-cart-list/>
-              </div>
-          </ng-template> 
-            
+              </div>   
           </p-overlayPanel>
         </div>
       </div>

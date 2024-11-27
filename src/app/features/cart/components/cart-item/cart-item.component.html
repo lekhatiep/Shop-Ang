@@ -4,7 +4,7 @@
         <div class="header__cart-item-head">
             <h5 class="header__cart-item-name">{{cartItem.title}}</h5>
             <div class="header__cart-item-price-warp">
-                <span class="header__cart-item-price">{{cartItem.price}} đ</span>
+                <span class="header__cart-item-price">{{cartItem.price | number: '1.0-0'}} đ</span>
                 <span class="header__cart-item-head-multiply">x</span>
                 <span class="header__cart-item-qty">{{cartItem.quantity}}</span>
             </div>

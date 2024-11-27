@@ -71,11 +71,21 @@ export class CartService {
     let listCartLocal = this.getListCartLocal();
     
     listCartLocal = listCartLocal.filter(x=> x.productId !== productID);
-
-    const cartUpdated = this.syncListCart(listCartLocal, this.listCart())
-
-    localStorage.setItem('listCart', JSON.stringify(cartUpdated));
-    this.listCartSubject$.next(cartUpdated);
+    console.log(this.authService.isLogged());
+    
+    //Remove in server
+    if(this.authService.isLogged()){
+      console.log('remove server');
+      
+      localStorage.setItem('listCart', JSON.stringify(listCartLocal));
+       this.removeCartItemFromListServer().subscribe();
+    }
+    //Remove in local
+    else{
+      console.log('remove local');
+      localStorage.setItem('listCart', JSON.stringify(listCartLocal));
+      this.listCartSubject$.next(listCartLocal);
+    }
 
   }
 
@@ -88,9 +98,6 @@ export class CartService {
     };
 
     const data = this.getListCartLocal();
-    
-    this.listCart;
-
 
     return this.httpClient
       .post<CartItemModel[]>(
@@ -106,5 +113,35 @@ export class CartService {
         }),
         catchError(() => throwError(() => Error('Cannot get list cart')))
       );
+  }
+
+  removeCartItemFromListServer(){
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.authService.getToken()}`,
+      }),
+    };
+
+    const data = this.getListCartLocal();
+
+    return this.httpClient
+      .post<CartItemModel[]>(
+        'https://localhost:5001/api/Carts/UpdateOrRemoveCartItem',
+        data,
+        options        
+      )
+      .pipe(
+        map((resData) => {
+          this.listCart.set(resData);
+          this.listCartSubject$.next(resData);
+          return resData;
+        }),
+        catchError(() => throwError(() => Error('Cannot get list cart')))
+      );
+  }
+
+  setListCartLocal(listCart : CartItemModel[]){
+    localStorage.setItem('listCart', JSON.stringify(listCart));
   }
 }

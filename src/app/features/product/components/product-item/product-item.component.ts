@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { ProductModel } from '../../model/product.model';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-product-item',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, DecimalPipe,CurrencyPipe],
   templateUrl: './product-item.component.html',
   styleUrl: './product-item.component.css',
 })
