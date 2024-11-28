@@ -93,6 +93,8 @@ export class ProductDetailComponent implements OnInit {
     libIcon.addIcons(faCartShopping, faMinus, faPlus);
   }
   ngOnInit(): void {
+    this.productService.setProductDetailStatus(true);
+
     const subRout = this.routerActivated.paramMap.subscribe({
       next: (paramMap) => {
         (this.id = paramMap.get('productID') ?? ''), this.loadProductDetail();

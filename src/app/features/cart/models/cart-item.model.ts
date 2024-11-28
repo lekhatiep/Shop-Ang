@@ -7,3 +7,17 @@ export interface CartItemModel {
     quantity: number,
     userID?: number
 }
+
+export interface CartItemInPageModel {
+    id?: string,
+    title?: string,
+    imgPath?: string,
+    total: number,
+    productId: number,
+    price: number,
+    discount: number,
+    quantity: number,
+    active: boolean,
+    isChecked: boolean,
+    isOrder: boolean
+}

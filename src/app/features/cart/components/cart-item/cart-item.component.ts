@@ -6,7 +6,7 @@ import { CurrencyPipe, DecimalPipe } from '@angular/common';
 @Component({
   selector: 'app-cart-item',
   standalone: true,
-  imports: [CurrencyPipe, DecimalPipe],
+  imports: [DecimalPipe],
   templateUrl: './cart-item.component.html',
   styleUrl: './cart-item.component.css',
 })

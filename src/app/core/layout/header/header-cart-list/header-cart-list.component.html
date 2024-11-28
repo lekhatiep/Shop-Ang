@@ -1,4 +1,4 @@
-<div class="min-w-[200px]">
+<div class="min-w-[200px] flex flex-col">
   @if(listCarts.length){
   <h3 class="header__cart-list-heading">Sản phẩm đã thêm</h3>
   <div class="header__cart-list-item">
@@ -7,7 +7,9 @@
 
     }
   </div>
-  <a class="btn btn--primary header__cart-view-cart">Xem giỏ hàng</a>
+  <div class="w-full">
+    <a class="btn btn--primary header__cart-view-cart">Xem giỏ hàng</a>
+  </div>
 
   }@else {
   <img

@@ -33,16 +33,19 @@ export class ProductService {
   categorySelectedSubject = new BehaviorSubject<number>(0);
   categorySelected$ = this.categorySelectedSubject.asObservable();
 
+  isHomeProductDetailPage = false;
+  
   setCatSelected(catID: number){
     this.categorySelectedSubject.next(catID);
   }
 
+  setProductDetailStatus(status: boolean) {
+    this.isHomeProductDetailPage = status;
+  }
 
-  //currentPage$ = this.currentPageSubject.asObservable();
-
-  //setCurrentPage(pageNumber: number){
-  // this.currentPageSubject.next(pageNumber);
-  //}
+  isInProductDetailPage(): boolean {
+    return this.isHomeProductDetailPage;
+  }
 
   totalPages = signal<number>(1);
 

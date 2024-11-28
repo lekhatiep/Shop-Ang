@@ -1,0 +1,56 @@
+<div class="content__cart-list-item">
+    <div class="row d-flex align-items-center w-100">
+        <div class="col-1">
+            <input type="checkbox" class="content__cart-item-checkbox check-item-${index}"  [class.checked]="active">
+        </div>
+        <div class="col-10 col-sm-5 col-md-6 content__cart-item-info">
+            <a href="">
+                <div class="content__cart-item-info-img" style="background-image: url('${item.imgPath}');"></div>
+            </a>
+            <div class="content__cart-wrap-title d-flex align-items-center">
+                <a href="" class="content__cart-item-info-title">
+                    
+                </a>
+        
+            </div>
+        </div>
+        <div class="col-2 d-sm-flex col-sm-2 col-md-1 d-none d-sm-flex justify-content-center content__cart-item-price">đ</div>
+        <div class="col-2 d-none d-sm-flex justify-content-center content__cart-item-quantity">
+            <div class="content__cart-warp-quantity">
+                <div class="content__cart-warp-minus minus-item-${index}" data-id='${item.id}'>
+                    <i class="content__cart-minus fa-solid fa-minus"></i>
+                </div>
+                <div class="content__cart-warp-current">
+                    <input type="text" class="product__quantity-current product__quantity-${index}"  value="${item.quantity}">
+                </div>
+                <div class="content__cart-warp-plus plus-item-${index}" data-id='${item.id}'>
+                    <i class="content__cart-plus fa-solid fa-plus"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-2 col-sm-2 col-md-1 justify-content-center d-none d-md-flex content__cart-item-total item-total-${index}"> đ</div>
+        <div class="col-3 col-sm-2 col-md-1 d-none d-sm-flex justify-content-center content__cart-item-action">
+            <div class="content__cart-item-remove remove__item-${index}" onclick=removeFromCart()>Xóa</div>
+        </div>
+    </div>
+    
+    <div class="row d-flex align-items-center justify-content-end w-100 d-sm-none mt-3">
+        <div class="col-3 d-inline-block d-sm-flex col-sm-2 col-md-1 d-flex justify-content-center content__cart-item-price"> đ</div>
+        <div class="col-4 d-flex justify-content-center content__cart-item-quantity">
+            <div class="content__cart-warp-quantity">
+                <div class="content__cart-warp-minus minus-item-${index}" data-id='${item.id}'>
+                    <i class="content__cart-minus fa-solid fa-minus"></i>
+                </div>
+                <div class="content__cart-warp-current">
+                    <input type="text" class="product__quantity-current product__quantity-${index}"  value="${item.quantity}">
+                </div>
+                <div class="content__cart-warp-plus plus-item-${index}" data-id='${item.id}'>
+                    <i class="content__cart-plus fa-solid fa-plus"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 col-sm-2 col-md-1 d-flex justify-content-center content__cart-item-action">
+            <div class="content__cart-item-remove remove__item-${index}" onclick=removeFromCart()>Xóa</div>
+        </div>
+    </div>
+</div>
