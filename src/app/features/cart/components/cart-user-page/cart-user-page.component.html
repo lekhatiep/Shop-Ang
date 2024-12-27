@@ -32,7 +32,9 @@
         </div>
         <div class="content__cart-list-wrap">
           @if(listItems().length > 0){
+            {{listItems().length}}
             @for (item of listItems(); track $index) {
+             
               <app-cart-item-page  class="w-full content__cart-list-item"  [cartItem]="item" />
             }
           }
@@ -49,9 +51,10 @@
               class="w-6/12 col-6 cart__purchase-grand-total flex justify-end items-center pe-5"
             >
               Tổng thanh toán (
-              <span class="cart__purchase-quantity-total">  {{totalQuantity()}}  </span> Sản phẩm ):
-              <span class="cart__purchase-price-total"> {{totalPrice() | number}} </span
-              ><span class="text-primary-color"> đ</span>
+              <span class="cart__purchase-quantity-total ml-1 mr-1">  {{totalQuantity}}  </span > 
+              <span class="mr-1">Sản phẩm ): </span>
+              <span class="cart__purchase-price-total"> {{totalPrice | number}} </span
+              ><span class="text-primary-color ml-1"> đ</span>
             </div>
             <div
               class="w-2/12 col-2 btn btn--primary cart__purchase-btn d-none d-lg-flex justify-center items-center"

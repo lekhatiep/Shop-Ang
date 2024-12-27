@@ -5,7 +5,7 @@
     >
       <div class="auth-form__header">
         <h3 class="auth-form__heading">Đăng ký</h3>
-        <span class="auth-form__switch-btn">Đăng nhập</span>
+        <span class="auth-form__switch-btn" (click)="onActiveLogin()">Đăng nhập</span>
       </div>
 
       <form [formGroup]="formRegistration" (ngSubmit)="onSubmit()">

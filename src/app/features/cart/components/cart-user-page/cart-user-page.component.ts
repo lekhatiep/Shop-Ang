@@ -23,26 +23,59 @@ import { CartItemInPageModel } from '../../models/cart-item.model';
 export class CartUserPageComponent implements OnInit {
   private cartService = inject(CartService);
   private authService = inject(AuthService);
-  listItems = signal<CartItemInPageModel[]>([]);
-  totalQuantity = signal<number>(0);
-  totalPrice = signal<number>(0);
+  listItems = signal<any[]>([]);
+  isLogged = false;
 
   ngOnInit(): void {
-    this.cartService.getListCartUserPage().subscribe({
-      next: (data) => {
-        this.listItems.set(data);
+    this.cartService.isMyCartPage.set(true);
 
-        const total = this.listItems().reduce((total, item)=>{
-          return total + item.price * item.quantity
-        }, 0)
-
-        const quantity = this.listItems().reduce((total, item)=>{
-          return total + item.quantity
-        }, 0)
-
-        this.totalPrice.set(total);
-        this.totalQuantity.set(quantity);
-      },
+    this.authService.user$.subscribe((user) => {
+      this.isLogged = !user ? false : true;
+      if(user){
+        this.loadListCart();
+      }
     });
+
+    this.cartService.listCartSubject$.subscribe((dataUpdate)=> {
+      this.listItems.set(dataUpdate);      
+    });
+    
+    //Not login: load from local
+    if(!this.isLogged){
+      this.listItems.set(this.cartService.getListCartLocal());
+      console.log(this.listItems());
+      
+    }
+
+    //  //Sub change in update item
+    //  this.cartService.listCartUserPageSubject$.subscribe({
+    //   next: (data) => {
+    //     this.listItems.set(data);
+    //   },
+    // })
+  }
+
+  loadListCart(){
+    this.cartService.syncListCartItemToServer().subscribe({
+        next: (data)=> {
+          this.listItems.set(data);
+          this.cartService.setListCartLocal(data);
+        }
+      })
+  }
+
+
+  get totalPrice(){
+    return this.listItems().filter(x=> x.isChecked).reduce((total, item)=>{
+      return total + item.price * item.quantity
+    }, 0)
+  }
+
+  get totalQuantity(){
+    return this.listItems().filter(x=> x.isChecked).reduce((total, item)=>{
+      return total + item.quantity
+    }, 0)
   }
 }
+
+

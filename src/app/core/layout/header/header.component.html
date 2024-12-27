@@ -145,7 +145,7 @@
         </li>
         <li
           class="header__navbar-item header__navbar-item--strong header__navbar-item-login"
-          (click)="openModalLogin()"
+          (click)="showDialogLogin()"
         >
           Đăng nhập
         </li>
@@ -181,7 +181,7 @@
       </ul>
     </nav>
     <!-- Header search -->
-    <div class="header-with-search">
+    <div class="header-with-search" >
       <!-- Logo -->
       <div class="header__logo">
         <a href="/" class="header__logo-link">
@@ -195,17 +195,27 @@
       </div>
       <!-- End of logo -->
       <!-- Search -->
-      <div class="flex-1">
-        <app-search-input></app-search-input>
-      </div>
+       @if(!isMyCartPage()){
+        <div class="flex-1">
+          <app-search-input></app-search-input>
+        </div>
+       }@else{
+        <div class="flex-1">
+          <div class="min-h-[40px]">
+            <!-- <img src="https://img.freepik.com/premium-vector/colorful-shopping-bags-shopping-cart-with-discount-sign-it_1280751-86699.jpg"/> -->
+
+          </div>
+        </div>
+       }
+      
       <!-- End of search -->
 
       <!-- Cart layout -->
-      <div class="header__cart">
+      <div class="header__cart" [style.display]="isMyCartPage() ? 'none' : ''" >
         <div class="header__cart-wrap">
           <!-- <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
                     <span class="header__cart-notice">0</span> -->
-          <a href="./pages/cart/" class="header__cart-link"  (mouseenter)="opCartList.toggle($event)">
+          <a  class="header__cart-link"  (mouseenter)="opCartList.toggle($event)" (click)="goMyCartPage()">
             <i class="header__cart-icon fa-solid fa-cart-shopping"></i>
             <fa-icon
               class="header__search-btn-icon text-white text-2xl"
@@ -215,9 +225,9 @@
           </a>
 
           <!-- No car: header__cart-list-no-cart -->
-          <p-overlayPanel #opCartList styleClass="op-cartlist" >
+          <p-overlayPanel #opCartList styleClass="op-cartist" >
               <div class="header__cart-list">
-                <app-header-cart-list/>
+                <app-header-cart-list (goMyCartPage)="goMyCartPage()"/>
               </div>   
           </p-overlayPanel>
         </div>
@@ -226,3 +236,12 @@
     </div>
   </div>
 </header>
+<div class="card flex justify-content-center">
+  <p-dialog 
+      [(visible)]="visibleLoginDialog" 
+      [modal]="true" 
+      [style]="{ width: 'initial' }">
+
+     <app-auth-wrap (closeDialog)="onCloseAuthDialog($event)"/>
+  </p-dialog>
+</div>

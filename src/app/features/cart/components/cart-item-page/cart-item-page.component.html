@@ -1,7 +1,7 @@
 <div class="">
     <div class="flex items-center w-full">
         <div class="w-1/12">
-            <input type="checkbox" class="content__cart-item-checkbox check-item-${index}"  [class.checked]="active" (change)="onChangeCheckItem($event)">
+            <input type="checkbox" class="content__cart-item-checkbox" [checked]="cartItem.isChecked" (change)="onChangeCheckItem($event)">
         </div>
         <div class="w-4/12 sm:w-5/12 md:w-6/12 content__cart-item-info flex  items-center">
             <a href="">
@@ -21,7 +21,7 @@
                     <fa-icon class="content__cart-minus" [icon]="['fas','minus']"></fa-icon>
                 </div>
                 <div class="content__cart-warp-current">
-                    <input #currentQuantity type="text" class="text-center w-[40px] border-none product__quantity-${index}"  [value]="cartItem.quantity">
+                    <input #currentQuantity type="text" class="text-center w-[40px] border-none" (keypress)="allowOnlyNumbers($event)" (change)="onChangeQuantity($event)" [value]="cartItem.quantity">
                 </div>
                 <div class="content__cart-warp-plus plus-item-${index}" data-id='${item.id}' (click)="onIncreaseQuantity()">
                     <fa-icon class="content__cart-plus" [icon]="['fas','plus']"></fa-icon>
@@ -30,7 +30,10 @@
         </div>
         <div class="w-2/12 sm:2/12 md:1/12 justify-center md:flex content__cart-item-total item-total-${index} text-[color:--primary-color]">{{cartItem.price * cartItem.quantity| number : "1.0-0" }} đ</div>
         <div class="w-3/12 sm:w-2/12 md:w-1/12 sm:flex justify-center content__cart-item-action">
-            <div class="content__cart-item-remove cursor-pointer text-[#fd5e32] hover:underline" onclick=removeFromCart()>Xóa</div>
+            <p-toast />
+            <p-confirmDialog />
+            <p-button class="content__cart-item-remove cursor-pointer text-[#fd5e32] hover:underline" (onClick)="confirm2($event)" label="Xóa" severity="danger" />
+        
         </div>
     </div>
     

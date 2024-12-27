@@ -21,14 +21,17 @@ import { faGooglePay, faAppStore } from '@fortawesome/free-brands-svg-icons';
 
 import { Subscription } from 'rxjs';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { DialogModule } from 'primeng/dialog';
 
 import { ModalService } from '../../../shared/modal/modal.service';
 import { AuthService } from '../../../features/auth/services/auth.service';
+import { CartService } from '../../../features/cart/services/cart.service';
 
 import { SearchInputComponent } from './search-input/search-input.component';
 import { LoginComponent } from '../../../features/auth/login/login.component';
 import { HeaderCartListComponent } from './header-cart-list/header-cart-list.component';
-import { CartService } from '../../../features/cart/services/cart.service';
+import { AuthWrapComponent } from "../../../features/auth/auth-wrap/auth-wrap.component";
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -41,7 +44,9 @@ import { CartService } from '../../../features/cart/services/cart.service';
     SearchInputComponent,
     HeaderCartListComponent,
     OverlayPanelModule,
-  ],
+    DialogModule,
+    AuthWrapComponent
+],
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
@@ -55,8 +60,11 @@ export class HeaderComponent {
   private modalService = inject(ModalService);
   private authService = inject(AuthService);
   private cartService = inject(CartService);
+  private router = inject(Router);
 
   countItem = signal<number>(0);
+  visibleLoginDialog = false;
+  isMyCartPage = this.cartService.isMyCartPage;
 
   constructor(library: FaIconLibrary) {
     library.addIcons(
@@ -70,11 +78,8 @@ export class HeaderComponent {
   }
 
   ngOnInit() {
-    // Truyền ViewContainerRef vào service
-    // this.modalService.setViewContainerRef(this.modalContainerRef);
-
     this.userSub = this.authService.user$.subscribe((user) => {
-      this.isAuthenticated = !user ? false : true;
+      this.isAuthenticated = !user ? false : true;   
     });
 
     this.cartService.listCartSubject$.subscribe((data) =>
@@ -98,5 +103,19 @@ export class HeaderComponent {
 
   logOut() {
     this.authService.logout();
+  }
+
+  goMyCartPage(){
+    this.router.navigate(['/cart']) 
+  }
+
+  showDialogLogin(){
+    this.visibleLoginDialog = true;
+  }
+
+  onCloseAuthDialog(isClose : boolean){  
+    if(isClose){
+      this.visibleLoginDialog = false;
+    }
   }
 }

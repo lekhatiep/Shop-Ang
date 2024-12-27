@@ -19,5 +19,6 @@ export interface CartItemInPageModel {
     quantity: number,
     active: boolean,
     isChecked: boolean,
-    isOrder: boolean
+    isOrder: boolean,
+    cartID: number
 }

@@ -1,8 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
+
 import { CartItemModel } from '../../../../features/cart/models/cart-item.model';
 import { CartItemComponent } from '../../../../features/cart/components/cart-item/cart-item.component';
 import { AuthService } from '../../../../features/auth/services/auth.service';
 import { CartService } from '../../../../features/cart/services/cart.service';
+import { AuthWrapComponent } from "../../../../features/auth/auth-wrap/auth-wrap.component";
+
 
 @Component({
   selector: 'app-header-cart-list',
@@ -12,12 +15,15 @@ import { CartService } from '../../../../features/cart/services/cart.service';
   styleUrl: './header-cart-list.component.css',
 })
 export class HeaderCartListComponent implements OnInit {
+  @Output() goMyCartPage = new EventEmitter<boolean>(false);
+
   private authService = inject(AuthService);
   private cartService = inject(CartService);
 
   isLogged = false;
   listCarts: CartItemModel[] = [];
   currentUserID = 0;
+  visibleLoginDialog = false;
 
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
@@ -45,4 +51,9 @@ export class HeaderCartListComponent implements OnInit {
         }
       })
   }
+
+  onGoMyCartPage(){
+    this.goMyCartPage.emit(true);
+  }
+  
 }

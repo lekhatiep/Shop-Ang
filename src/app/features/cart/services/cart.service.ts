@@ -16,7 +16,8 @@ export class CartService {
   listCartSubject$ = new BehaviorSubject<CartItemModel[]>([]);
   listCart = signal<CartItemModel[]>([]);
   listCartLocal: CartItemModel[] = [];
-  listCartUserPage = signal<CartItemInPageModel[]>([]);
+  listCartUserPageSubject$ = new BehaviorSubject<CartItemInPageModel[]>([]);
+  isMyCartPage = signal<boolean>(false);
 
   getListCart() {
     const options = {
@@ -148,6 +149,10 @@ export class CartService {
     return this.httpClient
       .get<CartItemInPageModel[]>(API_URL + '/api/Carts/GetListCart', options)
       .pipe(
+        map((data) => {
+          this.listCartUserPageSubject$.next(data);
+          return data
+        }),
         catchError(() => throwError(() => Error('loading user cart error')))
       );
   }

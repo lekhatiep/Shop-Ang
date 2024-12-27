@@ -1,4 +1,11 @@
-import { Component, DestroyRef, inject, Input } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -42,6 +49,10 @@ if (savedForm) {
 })
 export class LoginComponent {
   @Input() isModal: boolean = false;
+
+  @Output() activeSignup = new EventEmitter<boolean>(false);
+  @Output() closeDialog = new EventEmitter<boolean>(false);
+  
   private destroyRef = inject(DestroyRef);
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -55,7 +66,7 @@ export class LoginComponent {
       validators: [
         Validators.required,
         Validators.minLength(3),
-        mustContainQuestionMark,
+       // mustContainQuestionMark,
       ],
     }),
   });
@@ -74,11 +85,12 @@ export class LoginComponent {
 
     const subLogin = this.authService
       .login(enteredEmail, enteredPassword)
-      .subscribe(() => this.router.navigate(['/']));
+      .subscribe({ complete: () => 
+        this.closeDialog.emit(true) });
 
-    // this.destroyRef.onDestroy(() => {
-    //   subLogin.unsubscribe();
-    // });
+    this.destroyRef.onDestroy(() => {
+      subLogin.unsubscribe();
+    });
   }
 
   get emailIsInvalid() {
@@ -109,5 +121,9 @@ export class LoginComponent {
       });
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
+  }
+
+  onaActiveSignup() {
+    this.activeSignup.emit(true);
   }
 }
