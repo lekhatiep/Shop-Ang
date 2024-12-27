@@ -31,6 +31,5 @@ export class FooterComponent {
         faLinkedin,
         faCopyright
     );
-    console.log(library);
   }
 }

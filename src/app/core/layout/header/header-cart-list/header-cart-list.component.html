@@ -1,0 +1,23 @@
+<div class="min-w-[200px] flex flex-col">
+  @if(listCarts.length){
+  <h3 class="header__cart-list-heading">Sản phẩm đã thêm</h3>
+  <div class="header__cart-list-item">
+    @for (item of listCarts; track $index) {
+    <app-cart-item [cartItem]="item" />
+
+    }
+  </div>
+  <div class="w-full">
+    <a class="btn btn--primary header__cart-view-cart" (click)="onGoMyCartPage()" >Xem giỏ hàng</a>
+  </div>
+
+  }@else {
+  <img
+    src="assets/images/no-cart.png"
+    alt=""
+    class="header__cart-no-car-img"
+  />
+  <span class="header__cart-list-no-cart-msg"> Chưa có sản phẩm </span>
+  }
+
+</div>

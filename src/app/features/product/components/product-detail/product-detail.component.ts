@@ -32,33 +32,47 @@ import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { CookieService } from '../../../../shared/services/cookie.service';
+import { AuthService } from '../../../auth/services/auth.service';
+import { CartService } from '../../../cart/services/cart.service';
+import { CartItemModel } from '../../../cart/models/cart-item.model';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [DecimalPipe, FontAwesomeModule, ReactiveFormsModule, ToastModule, ButtonModule, RippleModule],
+  imports: [
+    DecimalPipe,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    ToastModule,
+    ButtonModule,
+    RippleModule,
+  ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css',
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class ProductDetailComponent implements OnInit {
- 
   error = signal('');
   isFetching = signal(false);
   private productService = inject(ProductService);
   private routerActivated = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
   private messageService = inject(MessageService);
-  private cookieService = inject(CookieService);
+  private authService = inject(AuthService);
+  private cartService = inject(CartService);
 
   product = this.productService.product;
   id: string = '';
   currentQuantity: number = 1;
-
-  listCartItem : {}[]  = [];
+  listCartItem: CartItemModel[] = [];
+  isLogin = false;
 
   get quantity() {
     return this.product()?.quantity ?? 1;
+  }
+
+  get listCartServer(){
+    return this.cartService.listCart();
   }
 
   quantityGroup = new FormGroup({
@@ -79,6 +93,8 @@ export class ProductDetailComponent implements OnInit {
     libIcon.addIcons(faCartShopping, faMinus, faPlus);
   }
   ngOnInit(): void {
+    this.productService.setProductDetailStatus(true);
+
     const subRout = this.routerActivated.paramMap.subscribe({
       next: (paramMap) => {
         (this.id = paramMap.get('productID') ?? ''), this.loadProductDetail();
@@ -89,12 +105,24 @@ export class ProductDetailComponent implements OnInit {
       subRout.unsubscribe();
     });
 
+    const subListCart = this.cartService.listCartSubject$.subscribe((list)=>{
+      this.listCartItem = list
+    })
+
     //load list cart temp
-    const listCartData = JSON.parse(this.cookieService.getCookie("listCart") ?? '');
-      if(listCartData){
-        this.listCartItem =  JSON.parse(listCartData);
+   
+
+    //obs user 
+    this.isLogin = this.authService.isLogged();
+    if(this.isLogin){
+      this.cartService.syncListCartItemToServer().subscribe()
+    }else{ 
+      const listCartData = localStorage.getItem('listCart');
+      if (listCartData) {
+        this.listCartItem = JSON.parse(listCartData);
+        this.cartService.listCartSubject$.next(this.listCartItem);
       }
-      
+    }
   }
 
   loadProductDetail() {
@@ -125,39 +153,33 @@ export class ProductDetailComponent implements OnInit {
 
   addToCart() {
     if (this.quantityGroup.controls.inputQuantity.valid) {
-      let listCartUpdate: any = [];
 
-      if(this.listCartItem == null){
-        
-      }
-      //const listCartData = JSON.parse(this.cookieService.getCookie("listCart") ?? '');
-      if(this.listCartItem.length > 0){
-         this.listCartItem?.map((item: any)=> {
-
-          if(item.productID == this.id){
-            item.quantity+= this.currentQuantity;
-          }
-          return item;
-        })
-        
-      }else{
-        
-         this.listCartItem.push({
-          productID: this.id,
-          quantity: this.currentQuantity,
-          price: this.product()?.price,
-          userId: 0
-        })
+      let newItem : CartItemModel = {
+        productId: +this.id,
+        imgPath: this.product()?.imagePath || '',
+        quantity: this.currentQuantity,
+        price: this.product()?.price || 0 ,
+        userID: 0,
       }
 
-      this.cookieService.setCookie("listCart", JSON.stringify(listCartUpdate), 10);
+      this.listCartItem = this.cartService.syncListCart(this.listCartItem, [newItem]);
+
+      localStorage.setItem('listCart', JSON.stringify(this.listCartItem));
       console.log('addToCart');
-      this.showToast1()
+
+      const syncCart = this.cartService.syncListCart(this.listCartItem, this.listCartServer)
+      this.cartService.listCartSubject$.next(syncCart);
+      this.showToast1();
     }
   }
 
   showToast1() {
     this.messageService.clear();
-    this.messageService.add({ key: 'toast1', severity: 'success', summary: 'Success', detail: 'Đã thêm vào giỏ' });
-}
+    this.messageService.add({
+      key: 'toast1',
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Đã thêm vào giỏ',
+    });
+  }
 }

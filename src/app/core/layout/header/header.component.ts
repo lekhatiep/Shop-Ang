@@ -4,7 +4,7 @@ import {
   EventEmitter,
   inject,
   Output,
-  ViewChild,
+  signal,
   ViewContainerRef,
   ViewEncapsulation,
 } from '@angular/core';
@@ -18,20 +18,35 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faBell, faCircleQuestion } from '@fortawesome/free-regular-svg-icons';
 import { faGooglePay, faAppStore } from '@fortawesome/free-brands-svg-icons';
-import { SearchInputComponent } from './search-input/search-input.component';
 
+import { Subscription } from 'rxjs';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { DialogModule } from 'primeng/dialog';
 
 import { ModalService } from '../../../shared/modal/modal.service';
-import { LoginComponent } from '../../../features/auth/login/login.component';
 import { AuthService } from '../../../features/auth/services/auth.service';
-import { Subscription } from 'rxjs';
+import { CartService } from '../../../features/cart/services/cart.service';
+
+import { SearchInputComponent } from './search-input/search-input.component';
+import { LoginComponent } from '../../../features/auth/login/login.component';
+import { HeaderCartListComponent } from './header-cart-list/header-cart-list.component';
+import { AuthWrapComponent } from "../../../features/auth/auth-wrap/auth-wrap.component";
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
-  imports: [FontAwesomeModule, SearchInputComponent, SearchInputComponent],
+  imports: [
+    FontAwesomeModule,
+    SearchInputComponent,
+    SearchInputComponent,
+    HeaderCartListComponent,
+    OverlayPanelModule,
+    DialogModule,
+    AuthWrapComponent
+],
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
@@ -44,6 +59,12 @@ export class HeaderComponent {
   vcr = inject(ViewContainerRef);
   private modalService = inject(ModalService);
   private authService = inject(AuthService);
+  private cartService = inject(CartService);
+  private router = inject(Router);
+
+  countItem = signal<number>(0);
+  visibleLoginDialog = false;
+  isMyCartPage = this.cartService.isMyCartPage;
 
   constructor(library: FaIconLibrary) {
     library.addIcons(
@@ -54,16 +75,16 @@ export class HeaderComponent {
       faGooglePay,
       faAppStore
     );
-    console.log(library);
   }
 
   ngOnInit() {
-    // Truyền ViewContainerRef vào service
-    // this.modalService.setViewContainerRef(this.modalContainerRef);
+    this.userSub = this.authService.user$.subscribe((user) => {
+      this.isAuthenticated = !user ? false : true;   
+    });
 
-    this.userSub = this.authService.user$.subscribe(user => {
-      this.isAuthenticated = !user ? false : true;
-    })
+    this.cartService.listCartSubject$.subscribe((data) =>
+      this.countItem.set(data.length)
+    );
   }
 
   openModalLogin() {
@@ -80,7 +101,21 @@ export class HeaderComponent {
     );
   }
 
-  logOut(){
+  logOut() {
     this.authService.logout();
+  }
+
+  goMyCartPage(){
+    this.router.navigate(['/cart']) 
+  }
+
+  showDialogLogin(){
+    this.visibleLoginDialog = true;
+  }
+
+  onCloseAuthDialog(isClose : boolean){  
+    if(isClose){
+      this.visibleLoginDialog = false;
+    }
   }
 }

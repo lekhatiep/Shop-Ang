@@ -1,6 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, delay, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, delay, single, tap, throwError } from 'rxjs';
 
 import { API_URL } from '../../../core/constants/app.constants';
 import { RegisterModel } from '../models/register.model';
@@ -17,9 +17,10 @@ export class AuthService {
 
   private timerExpirationDuration: any;
   user$ = new BehaviorSubject<User | null>(null);
+  isLogged = signal<boolean>(false);
 
   checkEmailExist(email: string) {
-    const url = 'https://localhost:5001/api/Users/CheckEmailExists';
+    const url = API_URL+ '/api/Users/CheckEmailExists';
     return this.httpClient
       .get<boolean>(url, {
         params: {
@@ -35,7 +36,7 @@ export class AuthService {
   
 
   login(email: string, password: string) {
-    const url = 'https://localhost:5001/api/Users/login';
+    const url = API_URL+ '/api/Users/login';
     return this.httpClient
       .post<LoginResponseModel>(url, {
         email,
@@ -45,13 +46,14 @@ export class AuthService {
         catchError(() => throwError(() => new Error('Login Failed'))),
         tap((resData) => {
           const expirationDate = new Date(
-            new Date().getTime() + +resData.expired_in * 1000
+            new Date().getTime() + +resData.expired_in
           );
           const user = new User(email, resData.access_token, expirationDate);
           
-          //this.autoLogout(+resData.expired_in * 1000)
+          this.autoLogout(+resData.expired_in)
           localStorage.setItem('userData', JSON.stringify(user));
           this.user$.next(user);
+          this.isLogged.set(true);
         })
       );
   }
@@ -75,8 +77,11 @@ export class AuthService {
     );
     
     const expirationDuration = new  Date(storeUser._tokenExpirationDate).getTime() - new Date().getTime() 
+    
     this.user$.next(storeUser);
     this.autoLogout(expirationDuration);
+    this.isLogged.set(true);
+    
   }
 
   logout() {
@@ -99,9 +104,17 @@ export class AuthService {
   }
 
   register(register: RegisterModel) {
-    const url = 'https://localhost:5001/api/Users/register';
+    const url = API_URL +'/api/Users/register';
     return this.httpClient
       .post<RegisterModel>(url, register)
       .pipe(catchError(() => throwError(() => new Error('Register Failed'))));
+  }
+
+  getToken(){
+    let token = "";
+    this.user$.subscribe(user => {
+      token = user?.token ?? ''
+    })
+    return token;
   }
 }

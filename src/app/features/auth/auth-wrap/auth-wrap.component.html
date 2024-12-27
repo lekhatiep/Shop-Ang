@@ -1,1 +1,8 @@
-<p>auth-wrap works!</p>
+@if(activeLogin){
+    <app-login (activeSignup)="onActiveSignup()"  (closeDialog)="onCloseDialog($event)"/>
+}
+@if(activeSignup){
+    <app-signup (activeLogin)="onActiveLogin()" (closeDialog)="onCloseDialog($event)"/>
+}
+
+  

@@ -1,4 +1,10 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Output,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -19,6 +25,9 @@ import { lastValueFrom, map } from 'rxjs';
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
+  @Output() activeLogin = new EventEmitter<boolean>(false);
+  @Output() closeDialog = new EventEmitter<boolean>(false);
+
   private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
 
@@ -77,9 +86,10 @@ export class SignupComponent {
           this.formRegistration.controls.passwordGroup.controls.password
             .value ?? '',
       };
-      const subRegister = this.authService
-        .register(dataRegister)
-        .subscribe((data) => console.log(''));
+      const subRegister = this.authService.register(dataRegister).subscribe({
+        complete: () => this.closeDialog.emit(true),
+      });
+
       this.destroyRef.onDestroy(() => {
         subRegister.unsubscribe();
       });
@@ -106,5 +116,9 @@ export class SignupComponent {
         this.formRegistration.controls.email.setErrors({ existMail: true });
       }
     }
+  }
+
+  onActiveLogin() {
+    this.activeLogin.emit(true);
   }
 }
