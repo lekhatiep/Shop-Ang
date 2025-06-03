@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CartItemInPageModel } from '../../models/cart-item.model';
 import { DecimalPipe } from '@angular/common';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -27,6 +27,7 @@ import { AuthService } from '../../../auth/services/auth.service';
   templateUrl: './cart-item-page.component.html',
   styleUrl: './cart-item-page.component.css',
   providers: [ConfirmationService, MessageService],
+  encapsulation: ViewEncapsulation.None
 })
 export class CartItemPageComponent {
   @Input({ required: true }) cartItem!: CartItemInPageModel;
@@ -141,17 +142,19 @@ export class CartItemPageComponent {
       message: 'Bạn muốn xóa khỏi giỏ hàng không?',
       header: 'Xác nhận xóa',
       icon: 'pi pi-question-circle',
-      acceptButtonStyleClass: 'p-button-danger p-button-text',
-      rejectButtonStyleClass: 'p-button-text p-button-text',
+      acceptButtonStyleClass: 'p-button-success p-button-text custom-accept',
+      rejectButtonStyleClass: 'p-button-danger p-button-text custom-reject',
       acceptIcon: 'none',
       rejectIcon: 'none',
       accept: () => {
         this.messageService.add({
-          severity: 'info',
-          summary: 'Confirmed',
-          detail: 'Record deleted',
+          severity: 'success',
+          summary: 'Đã xóa',
+          detail: 'Sản phẩm đã xóa khỏi giỏ hàng',
+          styleClass: "custom-info"
         });
-      },
+        //this.cartService.removeCartItem(this.cartItem.productId);
+        },
     });
   }
 

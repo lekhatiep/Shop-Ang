@@ -25,6 +25,7 @@ export class CartUserPageComponent implements OnInit {
   private authService = inject(AuthService);
   listItems = signal<any[]>([]);
   isLogged = false;
+  listItemsLocal = this.cartService.getListCartLocal();
 
   ngOnInit(): void {
     this.cartService.isMyCartPage.set(true);
@@ -75,6 +76,24 @@ export class CartUserPageComponent implements OnInit {
     return this.listItems().filter(x=> x.isChecked).reduce((total, item)=>{
       return total + item.quantity
     }, 0)
+  }
+
+  checkAllItem(event: Event){
+    const inputEL = event.target as HTMLInputElement;
+    const isChecked = inputEL.checked;
+
+    if(isChecked){
+        this.listItemsLocal.map(item => ({
+          ...item,
+          isChecked : true
+        }));
+
+        this.listItems().map(item => ({
+          ...item,
+          isChecked : true
+        }));
+    }
+
   }
 }
 

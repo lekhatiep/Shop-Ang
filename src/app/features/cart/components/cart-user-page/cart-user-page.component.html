@@ -4,7 +4,7 @@
       <div class="content__cart-warp">
         <div class="header__list-cart">
           <div class="w-1/12">
-            <input type="checkbox" class="header__list-cart-checkbox" />
+            <input type="checkbox" class="header__list-cart-checkbox" (change)="checkAllItem($event)" />
           </div>
           <div class="w-4/12 sm:w-5/12 md:w-6/12 header__list-cart-product">
             Sản phẩm
@@ -43,7 +43,7 @@
         <div class="cart__purchase">
           <div class="flex items-center">
             <div class="w-1/12 cart__purchase-wrap-checkall">
-              <input type="checkbox" class="cart__purchase-input" />
+              <input type="checkbox" class="cart__purchase-input" (change)="checkAllItem($event)"  />
             </div>
             <span class="w-4/12 col-sm-2 cart__purchase-text">Chọn tất cả</span>
             <div class="w-1/12 col-1 cart__purchase-remove-checkall">Xóa</div>

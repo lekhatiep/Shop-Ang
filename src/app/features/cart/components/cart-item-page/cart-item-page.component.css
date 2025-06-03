@@ -50,3 +50,38 @@
     border: 1px solid rgba(220, 220, 225, 1);
     margin-right: 15px;
 }
+.custom-accept {
+    margin-left: 12px;
+    background-color: #28a745  !important; /* example: change background color */
+    color: white; /* example: change text color */
+    border-radius: 4px; /* example: rounded corners */
+    padding: 6px 12px; /* example: padding */
+    border: none; /* example: remove border */
+    cursor: pointer; /* example: pointer cursor */
+    transition: background-color 0.3s ease;
+}
+
+.custom-reject {
+    margin-left: 12px;
+    background-color: #dc3545  !important; /* example: change background color */
+    color: white; /* example: change text color */
+    border-radius: 4px; /* example: rounded corners */
+    padding: 6px 12px; /* example: padding */
+    border: none; /* example: remove border */
+    cursor: pointer; /* example: pointer cursor */
+    transition: background-color 0.3s ease;
+}
+
+
+.p-confirm-dialog {
+  width: 300px !important;       /* Set desired width */
+  max-width: 90vw !important;    /* Responsive fallback */
+}
+
+.p-confirm-dialog .p-dialog-content {
+  font-size: 1.3rem;
+}
+
+.p-confirm-dialog .p-dialog-header {
+  font-size: 1.3rem;
+}
