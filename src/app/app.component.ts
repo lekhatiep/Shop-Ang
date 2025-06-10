@@ -1,12 +1,14 @@
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { UserLayoutComponent } from './core/layout/user-layout/user-layout.component';
 import { AuthService } from './features/auth/services/auth.service';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     UserLayoutComponent,
+    RouterOutlet
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

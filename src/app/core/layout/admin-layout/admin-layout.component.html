@@ -1,1 +1,15 @@
-<p>admin-layout works!</p>
+<div id="admin-app">
+  <div
+    id="sidebar"
+    
+  >
+    <div class="sidebar-wrapper w-[15%] h-[100vh] fixed top-0 z-10 overflow-y-auto bg-white bottom-0 transition-[left] duration-500 ease-out">
+      <div class="sidebar-header"></div>
+      <app-admin-sidebar></app-admin-sidebar>
+    </div>
+  </div>
+
+  <div id="main" class="admin-content ml-[15%] pl-8 bg-blue-300">
+    <router-outlet></router-outlet>
+  </div>
+</div>

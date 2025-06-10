@@ -1,0 +1,44 @@
+<div class="sidebar-menu">
+  <ul class="menu mt-[2rem] font-semibold">
+    <li class="sidebar-title">Menu</li>
+
+    <!-- <li class="sidebar-item active">
+      <a href="admin.html" class="sidebar-link">
+        <i class="bi bi-grid-fill"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+
+    <li class="sidebar-item active">
+      <a href="../product/index.html" class="sidebar-link">
+        <i class="bi bi-grid-fill"></i>
+        <span>Product</span>
+      </a>
+    </li> -->
+    @for (item of menuItems; track item.label) {
+    <li class="sidebar-item">
+      @if (item.children) {
+         
+        <a (click)="toggle(item)" class="menu-header sidebar-link cursor-pointer hover:bg-[#b4dbc1] rounded-sm" >
+           <fa-icon [icon]="['fas','angles-right']" class="pr-2"></fa-icon> {{ item.label }}
+        </a>
+        @if (item.expanded) {
+            <ul class="pl-8 pr-8 font-semibold">
+                @for (child of item.children; track child.label) {
+                <li class="sidebar-item hover:bg-[#b4dbc1] rounded-sm">
+                <a [routerLink]="child.route" routerLinkActive="active" class="sidebar-link">
+                    {{ child.label }}
+                </a>
+                </li>
+                }
+            </ul>
+            } 
+        } @else {
+      <a [routerLink]="item.route" routerLinkActive="active" class="sidebar-link hover:bg-[#b4dbc1] rounded-sm">
+        {{ item.label }}
+      </a>
+      }
+    </li>
+    }
+  </ul>
+</div>

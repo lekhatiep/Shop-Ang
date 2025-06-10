@@ -16,7 +16,7 @@ import { ProductService } from '../../../features/product/services/product.servi
     CategoryMenuComponent,
     ProductHomeComponent,
     FilterHomeComponent,
-    RouterOutlet,
+   
   ],
   templateUrl: './container.component.html',
   styleUrl: './container.component.css',
