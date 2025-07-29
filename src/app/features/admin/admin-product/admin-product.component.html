@@ -1,1 +1,334 @@
-<p>admin-product works!</p>
+<div class="page-heading">
+  <div class="page-title">
+    <div class="flex flex-wrap">
+      <div class="w-full md:w-1/2">
+        <h3 class="font-extrabold text-[2.4rem]">Danh sách sản phẩm</h3>
+        <p class="text-subtitle text-muted mb-[1.6rem] text-[1.6rem]">Danh sách sản phẩm</p>
+      </div>
+      <div class="w-full md:w-1/2 text-[1.6rem]">
+        <nav
+          aria-label="breadcrumb"
+          class="breadcrumb-header float-start float-lg-end"
+        >
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item" aria-current="page">
+              Layout Default
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <section class="section admin-product-table">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Danh sách sản phẩm</h4>
+      </div>
+      <div class="card-body">
+        
+        <!-- <table class="table table-striped" id="table1">
+          <thead>
+            <tr>
+              <th>NAME</th>
+              <th>PRICE</th>
+              <th>IMAGE</th>
+              <th>PRICE CURRENT</th>
+              <th>QUANTITY</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-bold-500 admin-product-table__col-text">
+                Áo thun nam nữ, Áo thun nam nữ, Áo thun nam nữ
+              </td>
+              <td class="admin-product-table__col-price">1.200.000 đ</td>
+              <td class="admin-product-table__col-img">
+                <div
+                  class="admin-product-table__img"
+                  style="background-image: url('../../assets/img/sp1.jpg')"
+                ></div>
+              </td>
+              <td>900.000</td>
+              <td class="text-bold-500">9999</td>
+              <td>
+                <ul class="admin-product-table__list">
+                  <li class="admin-product-table__list-item">
+                    <a href="#" class="admin-product-table__link">
+                      <i
+                        class="admin-product-table__icon-add fa-solid fa-circle-plus"
+                      ></i>
+                      Thêm
+                    </a>
+                  </li>
+                  <li class="admin-product-table__list-item">
+                    <a href="#" class="admin-product-table__link">
+                      <i
+                        class="admin-product-table__icon-edit fa-solid fa-pen"
+                      ></i>
+                      Sửa
+                    </a>
+                  </li>
+                  <li class="admin-product-table__list-item">
+                    <a href="#" class="admin-product-table__link">
+                      <i
+                        class="admin-product-table__icon-del fa-solid fa-trash-can"
+                      ></i>
+                      Xóa
+                    </a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr>
+              <td>Dale</td>
+              <td>fringilla.euismod.enim&#64;quam.ca</td>
+              <td>0500 527693</td>
+              <td>New Quay</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Nathaniel</td>
+              <td>mi.Duis&#64;diam.edu</td>
+              <td>(012165) 76278</td>
+              <td>Grumo Appula</td>
+              <td>
+                <span class="badge bg-danger">Inactive</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Darius</td>
+              <td>velit&#64;nec.com</td>
+              <td>0309 690 7871</td>
+              <td>Ways</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Oleg</td>
+              <td>rhoncus.id&#64;Aliquamauctorvelit.net</td>
+              <td>0500 441046</td>
+              <td>Rossignol</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Kermit</td>
+              <td>diam.Sed.diam&#64;anteVivamusnon.org</td>
+              <td>(01653) 27844</td>
+              <td>Patna</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Jermaine</td>
+              <td>sodales&#64;nuncsit.org</td>
+              <td>0800 528324</td>
+              <td>Mold</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Ferdinand</td>
+              <td>gravida.molestie&#64;tinciduntadipiscing.org</td>
+              <td>(016977) 4107</td>
+              <td>Marlborough</td>
+              <td>
+                <span class="badge bg-danger">Inactive</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Kuame</td>
+              <td>Quisque.purus&#64;mauris.org</td>
+              <td>(0151) 561 8896</td>
+              <td>Tresigallo</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Deacon</td>
+              <td>Duis.a.mi&#64;sociisnatoquepenatibus.com</td>
+              <td>07740 599321</td>
+              <td>Karapınar</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Channing</td>
+              <td>tempor.bibendum.Donec&#64;ornarelectusante.ca</td>
+              <td>0845 46 49</td>
+              <td>Warrnambool</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Aladdin</td>
+              <td>sem.ut&#64;pellentesqueafacilisis.ca</td>
+              <td>0800 1111</td>
+              <td>Bothey</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Cruz</td>
+              <td>non&#64;quisturpisvitae.ca</td>
+              <td>07624 944915</td>
+              <td>Shikarpur</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Keegan</td>
+              <td>molestie.dapibus&#64;condimentumDonecat.edu</td>
+              <td>0800 200103</td>
+              <td>Assen</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Ray</td>
+              <td>placerat.eget&#64;sagittislobortis.edu</td>
+              <td>(0112) 896 6829</td>
+              <td>Hofors</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Maxwell</td>
+              <td>diam&#64;dapibus.org</td>
+              <td>0334 836 4028</td>
+              <td>Thane</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Carter</td>
+              <td>urna.justo.faucibus&#64;orci.com</td>
+              <td>07079 826350</td>
+              <td>Biez</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Stone</td>
+              <td>velit.Aliquam.nisl&#64;sitametrisus.com</td>
+              <td>0800 1111</td>
+              <td>Olivar</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Berk</td>
+              <td>fringilla.porttitor.vulputate&#64;taciti.edu</td>
+              <td>(0101) 043 2822</td>
+              <td>Sanquhar</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Philip</td>
+              <td>turpis&#64;euenimEtiam.org</td>
+              <td>0500 571108</td>
+              <td>Okara</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Kibo</td>
+              <td>feugiat&#64;urnajustofaucibus.co.uk</td>
+              <td>07624 682306</td>
+              <td>La Cisterna</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Bruno</td>
+              <td>elit.Etiam.laoreet&#64;luctuslobortisClass.edu</td>
+              <td>07624 869434</td>
+              <td>Rocca d"Arce</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Leonard</td>
+              <td>blandit.enim.consequat&#64;mollislectuspede.net</td>
+              <td>0800 1111</td>
+              <td>Lobbes</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Hamilton</td>
+              <td>mauris&#64;diam.org</td>
+              <td>0800 256 8788</td>
+              <td>Sanzeno</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Harding</td>
+              <td>Lorem.ipsum.dolor&#64;etnetuset.com</td>
+              <td>0800 1111</td>
+              <td>Obaix</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+            <tr>
+              <td>Emmanuel</td>
+              <td>eget.lacus.Mauris&#64;feugiatSednec.org</td>
+              <td>(016977) 8208</td>
+              <td>Saint-Remy-Geest</td>
+              <td>
+                <span class="badge bg-success">Active</span>
+              </td>
+            </tr>
+          </tbody>
+        </table> -->
+      </div>
+    </div>
+  </section>
+</div>
+<div class="card">
+    <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{ product.code }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.quantity }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

@@ -28,7 +28,7 @@ export class AdminSidebarComponent {
 
    constructor(private libIcon: FaIconLibrary) {
     libIcon.addIcons(faCaretRight, faCaretDown, faAnglesRight, faAnglesDown);
-    console.log(libIcon);
+    //console.log(libIcon);
     
   }
 

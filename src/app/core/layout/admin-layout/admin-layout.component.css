@@ -5,7 +5,7 @@
 .sidebar-wrapper .menu .sidebar-title {
     padding: 0 1rem;
     margin: 1.5rem 0 1rem;
-    font-size: 1rem;
+    font-size: 2rem;
     list-style: none;
     font-weight: 600;
     color: #25396f;
@@ -20,7 +20,7 @@
 .sidebar-wrapper .menu .sidebar-link {
     display: block;
     padding: .7rem 1rem;
-    font-size: 1rem;
+    font-size: 1.6rem;
     display: flex;
     align-items: center;
     border-radius: .5rem;
